@@ -126,9 +126,7 @@ class TestPlanningWindowVersions(unittest.TestCase):
             "2H 2027 (Preview)",
             "1H 2028 (Preview)",  # too far out
         ]
-        result = scraper.planning_window_versions(
-            candidates, datetime.datetime(2026, 6, 15)
-        )
+        result = scraper.planning_window_versions(candidates, datetime.datetime(2026, 6, 15))
         self.assertIn("1H 2026", result)
         self.assertIn("2H 2026 (Preview)", result)
         self.assertIn("1H 2027 (Preview)", result)
@@ -136,9 +134,7 @@ class TestPlanningWindowVersions(unittest.TestCase):
         self.assertNotIn("1H 2028 (Preview)", result)
 
     def test_empty_candidates_returns_default(self):
-        result = scraper.planning_window_versions(
-            [], datetime.datetime(2026, 6, 15)
-        )
+        result = scraper.planning_window_versions([], datetime.datetime(2026, 6, 15))
         self.assertEqual(len(result), 1)
         # Either "1H 2026" or "2H 2026" depending on date logic
         self.assertRegex(result[0], r"^[12]H 2026$")
@@ -149,9 +145,7 @@ class TestPlanningWindowVersions(unittest.TestCase):
             "1H 2026",
             "1H 2027 (Preview)",
         ]
-        result = scraper.planning_window_versions(
-            candidates, datetime.datetime(2026, 6, 15)
-        )
+        result = scraper.planning_window_versions(candidates, datetime.datetime(2026, 6, 15))
         # 1H should come before 2H within the same year
         self.assertEqual(result.index("1H 2026"), 0)
         self.assertLess(result.index("1H 2026"), result.index("2H 2026 (Preview)"))
@@ -186,28 +180,92 @@ class TestCalculateReleaseDates(unittest.TestCase):
 
 
 class TestClassifyImpact(unittest.TestCase):
-    """Impact classification drives the UI badge. These rules are referenced
-    by the README and shouldn't change silently."""
+    """Impact classification drives the UI badge and must match SAP columns."""
 
-    def test_deprecated_is_critical(self):
-        result = scraper.classify_impact("Deprecated", "Automatically on", "")
+    def test_required_deprecation_is_critical(self):
+        result = scraper.classify_impact(
+            "Changed", "Deprecated", "Required", "Automatically on", "Major"
+        )
         self.assertEqual(result["level"], "critical")
 
-    def test_new_major_is_high(self):
-        result = scraper.classify_impact("New", "Major", "")
+    def test_info_only_deprecation_is_high(self):
+        result = scraper.classify_impact(
+            "Changed", "Deprecated", "Info only", "Automatically on", "Minor"
+        )
         self.assertEqual(result["level"], "high")
 
-    def test_changed_minor_is_medium(self):
-        result = scraper.classify_impact("Changed", "Minor", "")
+    def test_deleted_is_critical(self):
+        result = scraper.classify_impact(
+            "Changed", "Deleted", "Info only", "Automatically on", "Minor"
+        )
+        self.assertEqual(result["level"], "critical")
+
+    def test_required_general_availability_is_high(self):
+        result = scraper.classify_impact(
+            "New", "General Availability", "Required", "Customer configured", "Minor"
+        )
+        self.assertEqual(result["level"], "high")
+
+    def test_major_automatically_on_is_high(self):
+        result = scraper.classify_impact(
+            "Changed", "General Availability", "Info only", "Automatically on", "Major"
+        )
+        self.assertEqual(result["level"], "high")
+
+    def test_recommended_is_medium(self):
+        result = scraper.classify_impact(
+            "New", "General Availability", "Recommended", "Automatically on", "Minor"
+        )
         self.assertEqual(result["level"], "medium")
 
-    def test_changed_required_is_high(self):
-        result = scraper.classify_impact("Changed", "Required", "")
-        self.assertEqual(result["level"], "high")
+    def test_customer_configured_is_medium(self):
+        result = scraper.classify_impact(
+            "New", "General Availability", "Info only", "Customer configured", "Minor"
+        )
+        self.assertEqual(result["level"], "medium")
 
-    def test_deleted_is_high(self):
-        result = scraper.classify_impact("Deleted", "Customer configured", "")
-        self.assertEqual(result["level"], "high")
+    def test_minor_info_only_automatic_new_item_is_low(self):
+        result = scraper.classify_impact(
+            "New", "General Availability", "Info only", "Automatically on", "Minor"
+        )
+        self.assertEqual(result["level"], "low")
+
+
+class TestValidateItems(unittest.TestCase):
+    VALID_ITEM = {
+        "changeType": "New",
+        "lifecycle": "General Availability",
+        "action": "Required",
+        "impact": {"level": "high"},
+    }
+
+    def test_accepts_current_sap_semantics(self):
+        scraper.validate_items([self.VALID_ITEM])
+
+    def test_rejects_missing_type_column(self):
+        broken = dict(self.VALID_ITEM, changeType="")
+        with self.assertRaisesRegex(ValueError, "Type column"):
+            scraper.validate_items([broken])
+
+    def test_rejects_all_low_collapse(self):
+        broken = dict(self.VALID_ITEM, impact={"level": "low"})
+        with self.assertRaisesRegex(ValueError, "collapsed to Low"):
+            scraper.validate_items([broken])
+
+
+class TestGeneratePlainEnglish(unittest.TestCase):
+    def test_no_longer_required_is_not_misread_as_required_action(self):
+        result = scraper.generate_plain_english(
+            "Changed",
+            "General Availability",
+            "Info only",
+            "Automatically on",
+            "Minor",
+            "Permission change",
+            "This permission is no longer required.",
+        )
+
+        self.assertEqual(result, "Updated automatically. This permission is no longer required.")
 
 
 class TestBuildMetaSummary(unittest.TestCase):
@@ -257,9 +315,7 @@ class TestReplaceMetaContent(unittest.TestCase):
 </head><body></body></html>"""
 
     def test_replaces_target_property_only(self):
-        result = scraper.replace_meta_content(
-            self.SAMPLE_HTML, "property", "og:title", "NEW TITLE"
-        )
+        result = scraper.replace_meta_content(self.SAMPLE_HTML, "property", "og:title", "NEW TITLE")
         self.assertIn('content="NEW TITLE"', result)
         # Other meta tags should be untouched
         self.assertIn('content="OLD_DESC"', result)
@@ -303,8 +359,13 @@ class TestScrapedDataShape(unittest.TestCase):
         self.assertIn("items", data)
         meta = data["metadata"]
         for key in [
-            "source", "scrapedAt", "totalItems", "lastScraped",
-            "availableVersions", "versionCounts", "releaseDates",
+            "source",
+            "scrapedAt",
+            "totalItems",
+            "lastScraped",
+            "availableVersions",
+            "versionCounts",
+            "releaseDates",
         ]:
             self.assertIn(key, meta, f"metadata missing {key}")
 
@@ -318,9 +379,21 @@ class TestScrapedDataShape(unittest.TestCase):
             self.skipTest("no items in data/updates.json")
         item = data["items"][0]
         for key in [
-            "title", "description", "product", "module", "feature",
-            "lifecycle", "action", "enablement", "refNumber",
-            "impact", "plainEnglish", "releaseVersion", "sapLink",
+            "title",
+            "description",
+            "product",
+            "module",
+            "feature",
+            "changeType",
+            "majorOrMinor",
+            "lifecycle",
+            "action",
+            "enablement",
+            "refNumber",
+            "impact",
+            "plainEnglish",
+            "releaseVersion",
+            "sapLink",
         ]:
             self.assertIn(key, item, f"item missing {key}")
 
@@ -328,7 +401,23 @@ class TestScrapedDataShape(unittest.TestCase):
         (PROJECT_ROOT / "data" / "updates.json").exists(),
         "data/updates.json not present - skip",
     )
-    def test_validAsOf_not_all_ref_ids(self):
+    def test_impact_does_not_collapse_to_all_low(self):
+        data = json.loads(self.DATA_PATH.read_text(encoding="utf-8"))
+        items = data.get("items", [])
+        if not items:
+            self.skipTest("no items in data/updates.json")
+        levels = {(item.get("impact") or {}).get("level") for item in items}
+        self.assertNotEqual(
+            levels,
+            {"low"},
+            "all items are Low - SAP semantic columns are likely mis-mapped",
+        )
+
+    @unittest.skipUnless(
+        (PROJECT_ROOT / "data" / "updates.json").exists(),
+        "data/updates.json not present - skip",
+    )
+    def test_valid_as_of_not_all_ref_ids(self):
         """Regression guard: validAsOf should contain dates, status strings,
         or be empty - never bulk ref-ids (e.g. KM-22133, ECT-260432).
 
@@ -342,11 +431,7 @@ class TestScrapedDataShape(unittest.TestCase):
         if not items:
             self.skipTest("no items in data/updates.json")
         ref_id_pattern = re.compile(r"^[A-Z]{2,5}-?\d+$")
-        ref_id_vao = sum(
-            1
-            for i in items
-            if ref_id_pattern.match(i.get("validAsOf", "").strip())
-        )
+        ref_id_vao = sum(1 for i in items if ref_id_pattern.match(i.get("validAsOf", "").strip()))
         # Allow up to 1% as edge cases; 100% is the broken state
         threshold = max(2, len(items) // 100)
         if ref_id_vao > threshold:
@@ -358,7 +443,8 @@ class TestScrapedDataShape(unittest.TestCase):
             )
         # If we reach here, the data is in good shape - enforce the guard
         self.assertLessEqual(
-            ref_id_vao, threshold,
+            ref_id_vao,
+            threshold,
             f"{ref_id_vao}/{len(items)} items have a ref-id in validAsOf "
             f"(threshold: {threshold}). Column mapping is likely broken.",
         )
@@ -367,7 +453,7 @@ class TestScrapedDataShape(unittest.TestCase):
         (PROJECT_ROOT / "data" / "updates.json").exists(),
         "data/updates.json not present - skip",
     )
-    def test_refNumber_contains_real_refs(self):
+    def test_ref_number_contains_real_refs(self):
         """Regression guard: at least 5% of items should have a ref-id in
         refNumber. If 0 items do, the refNumber column is being read from
         the wrong cell. Skipped while the data is in the known-bad state."""
@@ -376,11 +462,7 @@ class TestScrapedDataShape(unittest.TestCase):
         if not items:
             self.skipTest("no items in data/updates.json")
         ref_id_pattern = re.compile(r"^[A-Z]{2,5}-?\d+$")
-        real_refs = sum(
-            1
-            for i in items
-            if ref_id_pattern.match(i.get("refNumber", "").strip())
-        )
+        real_refs = sum(1 for i in items if ref_id_pattern.match(i.get("refNumber", "").strip()))
         threshold = max(2, len(items) // 20)  # 5%
         if real_refs < threshold:
             self.skipTest(
@@ -390,7 +472,8 @@ class TestScrapedDataShape(unittest.TestCase):
                 f"test will enforce the regression guard."
             )
         self.assertGreaterEqual(
-            real_refs, threshold,
+            real_refs,
+            threshold,
             f"Only {real_refs}/{len(items)} items have a real ref-id in "
             f"refNumber (expected >= {threshold}). refNumber column mapping "
             f"is likely broken.",

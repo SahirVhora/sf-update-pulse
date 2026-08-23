@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta property="og:title" content="SAP SF Release Updates - 540 SuccessFactors updates">
-<meta property="og:description" content="540 SAP SuccessFactors release updates across 1H 2026, 2H 2026 (Preview), classified by impact and summarised in plain English. Last refreshed 2026-08-17 06:54 UTC.">
+<meta property="og:description" content="540 SAP SuccessFactors release updates across 1H 2026, 2H 2026 (Preview), classified by impact and summarised in plain English. 81 critical and 92 high impact items. Last refreshed 2026-08-23 20:38 UTC.">
 <meta property="og:image" content="https://sahirvhora.github.io/sf-release-update/preview.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -14,9 +14,9 @@
 <meta name="robots" content="index, follow">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="SAP SF Release Updates - 540 SuccessFactors updates">
-<meta name="twitter:description" content="540 SAP SuccessFactors release updates across 1H 2026, 2H 2026 (Preview), classified by impact and summarised in plain English. Last refreshed 2026-08-17 06:54 UTC.">
+<meta name="twitter:description" content="540 SAP SuccessFactors release updates across 1H 2026, 2H 2026 (Preview), classified by impact and summarised in plain English. 81 critical and 92 high impact items. Last refreshed 2026-08-23 20:38 UTC.">
 <meta name="twitter:image" content="https://sahirvhora.github.io/sf-release-update/preview.png">
-<meta name="description" content="540 SAP SuccessFactors release updates across 1H 2026, 2H 2026 (Preview), classified by impact and summarised in plain English. Last refreshed 2026-08-17 06:54 UTC.">
+<meta name="description" content="540 SAP SuccessFactors release updates across 1H 2026, 2H 2026 (Preview), classified by impact and summarised in plain English. 81 critical and 92 high impact items. Last refreshed 2026-08-23 20:38 UTC.">
 <title>SAP SF Release Updates - 540 SuccessFactors updates</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <style>
@@ -695,7 +695,7 @@ body{
           <p style="font-size:13px;color:var(--text2);margin-bottom:16px">
             Select the SF modules you manage. The checklist will show only relevant updates with action items prioritised.
           </p>
-          
+
       <div class="qs-row">
         <button class="qs-btn" onclick="quickSelect('action_required')">⚠️ Action Required only</button>
         <button class="qs-btn" onclick="quickSelect('high_impact')">🔥 High Impact modules</button>
@@ -838,18 +838,28 @@ async function loadData() {
 }
 
 // -- Filtering --
+function updateType(item) {
+  const lifecycle = String(item.lifecycle || '').toLowerCase();
+  if (lifecycle === 'deprecated' || lifecycle === 'deleted') return lifecycle;
+  const sourceType = String(item.changeType || '').toLowerCase();
+  if (sourceType === 'new' || sourceType === 'changed') return sourceType;
+  // Backward compatibility for embedded/older data that stored type in action.
+  const legacyAction = String(item.action || '').toLowerCase();
+  return ['new','changed','deprecated','deleted'].includes(legacyAction) ? legacyAction : '';
+}
+
 function getFilteredItems() {
   return allItems.filter(item => {
     // Impact filter (pill buttons)
     if (!activeImpacts.has('all') && !activeImpacts.has(item.impact.level)) return false;
     // Action filter (pill buttons) - only if no sidebar sub-action selected
-    if (!activeAction && !activeActions.has('all') && !activeActions.has(item.action.toLowerCase())) return false;
+    if (!activeAction && !activeActions.has('all') && !activeActions.has(updateType(item))) return false;
     // Sidebar action filter (takes priority over pill buttons)
-    if (activeAction && item.action.toLowerCase() !== activeAction) return false;
+    if (activeAction && updateType(item) !== activeAction) return false;
     // Search
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
-      const haystack = [item.title, item.description, item.module, item.product, item.feature, item.lifecycle].join(' ').toLowerCase();
+      const haystack = [item.title, item.description, item.module, item.product, item.feature, item.changeType, item.majorOrMinor, item.lifecycle, item.action, item.enablement].join(' ').toLowerCase();
       if (!haystack.includes(q)) return false;
     }
     // Module filter
@@ -892,30 +902,30 @@ function renderSidebar() {
   // Use version-filtered items for sidebar counts
   const versionItems = activeVersion === 'all' ? allItems : allItems.filter(i => i.releaseVersion === activeVersion);
   const groups = groupByModule(versionItems);
-  
+
   // Count actions per module (from version-filtered items)
   const modStats = {};
   for (const item of versionItems) {
     const m = item.module || 'Other';
     if (!modStats[m]) modStats[m] = {total:0, new:0, changed:0, deprecated:0, deleted:0};
     modStats[m].total++;
-    const act = item.action.toLowerCase();
+    const act = updateType(item);
     if (modStats[m][act] !== undefined) modStats[m][act]++;
   }
 
   let html = '';
-  
+
   // "All Updates" at top (SF Compass style)
   html += `<div class="sidebar-all" data-module="" data-action="" onclick="selectSidebarModule('', '', this)">
     <span style="font-size:15px;width:20px;text-align:center">🏠</span> All Updates
     <span class="all-count">${versionItems.length}</span>
   </div>`;
-  
+
   // Module headers with accordion
   for (const [mod, items] of groups) {
     const stats = modStats[mod] || {total:items.length, new:0, changed:0, deprecated:0, deleted:0};
     const isOpen = activeModule === mod;
-    
+
     // Module icon based on module name
     let icon = '📦';
     if (mod.includes('Employee')) icon = '👤';
@@ -942,14 +952,14 @@ function renderSidebar() {
     else if (mod.includes('Process') || mod.includes('Automation')) icon = '🤖';
     else if (mod.includes('Reward') || mod.includes('Recognition')) icon = '🏆';
     else if (mod.includes('Presentation')) icon = '📽️';
-    
+
     // Count critical & high for color indicator
     const critCount = items.filter(i => i.impact.level === 'critical').length;
     const highCount = items.filter(i => i.impact.level === 'high').length;
     let dotClass = 'low';
     if (critCount > 0) dotClass = 'critical';
     else if (highCount > 0) dotClass = 'high';
-    
+
     html += `<div class="module-header${isOpen ? ' open' : ''}" onclick="selectSidebarModule('${escHtml(mod)}', '', this)" data-module="${escHtml(mod)}">
       <span class="mod-icon">${icon}</span>
       <span class="sub-dot ${dotClass}" style="width:7px;height:7px"></span>
@@ -957,7 +967,7 @@ function renderSidebar() {
       <span class="mod-count">${stats.total}</span>
       <span class="mod-chevron">▸</span>
     </div>`;
-    
+
     // Sub-items: action types
     html += `<div class="module-subitems${isOpen ? ' open' : ''}" data-module="${escHtml(mod)}">
       <div class="sub-item${activeModule === mod && activeAction === 'new' ? ' active' : ''}" data-module="${escHtml(mod)}" data-action="new" onclick="event.stopPropagation();selectSidebarModule('${escHtml(mod)}', 'new', this)">
@@ -978,7 +988,7 @@ function renderSidebar() {
       </div>
     </div>`;
   }
-  
+
   sidebar.innerHTML = html;
 }
 
@@ -987,11 +997,11 @@ function toggleSidebarModule(header) {
   const subitems = document.querySelector(`.module-subitems[data-module="${CSS.escape(modName)}"]`);
   if (!subitems) return;
   const isOpen = subitems.classList.contains('open');
-  
+
   // Close all others
   document.querySelectorAll('.module-subitems.open').forEach(c => c.classList.remove('open'));
   document.querySelectorAll('.module-header.open').forEach(h => h.classList.remove('open'));
-  
+
   if (!isOpen) {
     subitems.classList.add('open');
     header.classList.add('open');
@@ -1001,16 +1011,16 @@ function toggleSidebarModule(header) {
 function selectSidebarModule(moduleName, actionName, el) {
   activeModule = moduleName || null;
   activeAction = actionName || null;
-  
+
   // Update sidebar active states
   document.querySelectorAll('.sidebar-all, .sub-item').forEach(i => i.classList.remove('active'));
   if (el) el.classList.add('active');
-  
+
   // If "All" selected
   if (!moduleName && !actionName) {
     document.querySelector('.sidebar-all')?.classList.add('active');
   }
-  
+
   // If module clicked without action: expand accordion + filter to module
   if (moduleName && !actionName) {
     // Expand this module's sub-items
@@ -1021,7 +1031,7 @@ function selectSidebarModule(moduleName, actionName, el) {
     if (subitems) subitems.classList.add('open');
     if (header) header.classList.add('open');
   }
-  
+
   render();
 }
 
@@ -1041,15 +1051,18 @@ function enrichItems() {
 function impactScore(item) {
   const action = (item.action || '').toLowerCase();
   const enablement = (item.enablement || '').toLowerCase();
+  const changeType = updateType(item);
+  const size = (item.majorOrMinor || '').toLowerCase();
   const text = [item.title,item.description,item.lifecycle,item.feature,item.refNumber].join(' ').toLowerCase();
   let score = 0;
-  if (action.includes('deleted') || text.includes('will be deleted')) score += 45;
-  if (action.includes('deprecated') || text.includes('deprecated')) score += 38;
-  if (enablement.includes('required')) score += 30;
+  if (changeType === 'deleted' || text.includes('will be deleted')) score += 45;
+  if (changeType === 'deprecated' || text.includes('deprecated')) score += 38;
+  if (action === 'required') score += 30;
+  if (action === 'recommended') score += 15;
   if (enablement.includes('automatically')) score += 25;
-  if (enablement.includes('major')) score += 20;
-  if (action.includes('changed')) score += 12;
-  if (action.includes('new')) score += 6;
+  if (size === 'major') score += 20;
+  if (changeType === 'changed') score += 12;
+  if (changeType === 'new') score += 6;
   if (/api|integration|permission|role|security|odata|identity|platform/.test(text)) score += 15;
   if (/employee central|job information|position|workflow|business rule/.test(text)) score += 12;
   if (/may 2027|november|production|preview|end of maintenance/.test(text)) score += 8;
@@ -1057,7 +1070,7 @@ function impactScore(item) {
 }
 
 function radarFlags(item) {
-  const text = [item.title,item.description,item.enablement,item.lifecycle,item.feature].join(' ').toLowerCase();
+  const text = [item.title,item.description,item.action,item.enablement,item.lifecycle,item.feature,item.majorOrMinor].join(' ').toLowerCase();
   const flags = [];
   if (/deprecated|deleted|end of maintenance/.test(text)) flags.push('Deprecation risk');
   if (/required|automatically on/.test(text)) flags.push('Action required');
@@ -1069,7 +1082,7 @@ function radarFlags(item) {
 }
 
 function rolesForItem(item) {
-  const text = [item.title,item.description,item.module,item.lifecycle,item.feature,item.enablement].join(' ').toLowerCase();
+  const text = [item.title,item.description,item.module,item.changeType,item.majorOrMinor,item.lifecycle,item.action,item.feature,item.enablement].join(' ').toLowerCase();
   const roles = ['consultant'];
   if (/test|changed|required|automatically|major|deprecated|deleted/.test(text)) roles.push('test');
   if (/deprecated|deleted|required|automatically|major|business|experience|workflow/.test(text)) roles.push('product');
@@ -1092,11 +1105,13 @@ function testGuidance(item) {
 function recommendedAction(item) {
   const action = (item.action || '').toLowerCase();
   const enablement = (item.enablement || '').toLowerCase();
+  const changeType = updateType(item);
+  const size = (item.majorOrMinor || '').toLowerCase();
   const text = [item.title,item.description].join(' ').toLowerCase();
-  if (action.includes('deprecated') || text.includes('deprecated') || text.includes('deleted')) return 'Add to deprecation watchlist and confirm replacement path before production.';
-  if (enablement.includes('required')) return 'Schedule configuration review and owner sign-off during preview.';
+  if (changeType === 'deprecated' || changeType === 'deleted' || text.includes('deprecated') || text.includes('deleted')) return 'Add to deprecation watchlist and confirm replacement path before production.';
+  if (action === 'required') return 'Schedule configuration review and owner sign-off during preview.';
   if (enablement.includes('automatically')) return 'Regression test in preview because behaviour may change without enablement.';
-  if (enablement.includes('major')) return 'Assess adoption value, dependencies, and test scope before enabling.';
+  if (size === 'major' || action === 'recommended') return 'Assess adoption value, dependencies, and test scope before enabling.';
   return 'Review in preview and document whether it applies to your landscape.';
 }
 
@@ -1160,7 +1175,7 @@ function exportTestPack() {
 
 function exportDeprecationWatch() {
   const items = getFilteredItems().filter(item => {
-    const text = [item.action,item.title,item.description,item.lifecycle,item.refNumber].join(' ').toLowerCase();
+    const text = [updateType(item),item.title,item.description,item.lifecycle,item.refNumber].join(' ').toLowerCase();
     return /deprecated|deleted|end of maintenance|will be deleted|deprecation/.test(text);
   }).sort((a,b)=>(b.impactScore||0)-(a.impactScore||0)).slice(0,25);
   const lines = ['# SAP SuccessFactors Deprecation Watchlist','',activeFilterLabel(),''];
@@ -1169,7 +1184,8 @@ function exportDeprecationWatch() {
     lines.push(`## ${i+1}. ${item.title}`);
     lines.push(`- Score: ${item.impactScore}`);
     lines.push(`- Module: ${item.module || 'Other'}`);
-    lines.push(`- Action: ${item.action || 'Review'}`);
+    lines.push(`- Update type: ${updateType(item) || 'Review'}`);
+    lines.push(`- SAP action: ${item.action || 'Not specified'}`);
     lines.push(`- Recommended action: ${item.recommendedAction}`);
     if (item.sapLink) lines.push(`- SAP source: ${fixSapLink(item.sapLink)}`);
     lines.push('');
@@ -1244,7 +1260,7 @@ function renderStats() {
   const high = filtered.filter(i => i.impact.level === 'high').length;
   const med = filtered.filter(i => i.impact.level === 'medium').length;
   const low = filtered.filter(i => i.impact.level === 'low').length;
-  
+
   document.getElementById('stats-bar').innerHTML = `
     <div class="stat"><span class="stat-count">${filtered.length}</span><span class="stat-label">Updates</span></div>
     <div class="stat"><span class="stat-count" style="color:var(--critical)">${crit}</span><span class="stat-label">Critical</span></div>
@@ -1271,11 +1287,11 @@ function renderContent() {
   let html = '';
   for (const [mod, items] of groups) {
     const id = 'mod-' + mod.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
-    
+
     // Count impacts
     const crit = items.filter(i => i.impact.level === 'critical').length;
     const high = items.filter(i => i.impact.level === 'high').length;
-    
+
     let badgesHtml = '';
     if (crit) badgesHtml += `<span style="background:var(--critical);color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">${crit} critical</span>`;
     if (high) badgesHtml += `<span style="background:var(--high);color:#000;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">${high} high</span>`;
@@ -1292,7 +1308,8 @@ function renderContent() {
       <div class="module-group-body open" id="${id}">`;
 
     for (const item of items) {
-      const actionClass = 'action-' + (item.action || '').toLowerCase();
+      const itemType = updateType(item);
+      const actionClass = 'action-' + itemType;
       const sourceFields = [
         ['Feature', item.feature],
         ['Demo', item.demo],
@@ -1308,7 +1325,9 @@ function renderContent() {
           <span class="impact-badge ${escHtml(item.impact.level)}">${escHtml(item.impact.label)}</span>
         </div>
         <div class="card-meta">
-          <span class="meta-tag ${escHtml(actionClass)}">${escHtml(item.action)}</span>
+          ${itemType ? `<span class="meta-tag ${escHtml(actionClass)}">${escHtml(itemType.charAt(0).toUpperCase() + itemType.slice(1))}</span>` : ''}
+          ${item.action ? `<span class="meta-tag">${escHtml(item.action)}</span>` : ''}
+          ${item.majorOrMinor ? `<span class="meta-tag">${escHtml(item.majorOrMinor)}</span>` : ''}
           ${item.enablement ? `<span class="meta-tag">${escHtml(item.enablement)}</span>` : ''}
           ${item.product ? `<span class="meta-tag">${escHtml(item.product)}</span>` : ''}
           ${item.lifecycle ? `<span class="meta-tag">${escHtml(item.lifecycle)}</span>` : ''}
@@ -1337,9 +1356,9 @@ function renderContent() {
 
     html += `</div></div>`;
   }
-  
+
   container.innerHTML = html;
-  
+
   // Accordion toggle
   container.querySelectorAll('.module-group-header').forEach(header => {
     header.addEventListener('click', () => {
@@ -1363,7 +1382,7 @@ document.getElementById('search').addEventListener('input', (e) => {
 document.getElementById('impact-filters').addEventListener('click', (e) => {
   if (!e.target.dataset.impact) return;
   const impact = e.target.dataset.impact;
-  
+
   if (impact === 'all') {
     activeImpacts = new Set(['all']);
   } else {
@@ -1375,12 +1394,12 @@ document.getElementById('impact-filters').addEventListener('click', (e) => {
     }
     if (!activeImpacts.size) activeImpacts = new Set(['all']);
   }
-  
+
   // Update button states
   document.querySelectorAll('#impact-filters .filter-btn').forEach(btn => {
     btn.classList.toggle('active', activeImpacts.has(btn.dataset.impact));
   });
-  
+
   render();
 });
 
@@ -1397,7 +1416,7 @@ document.getElementById('role-filters').addEventListener('click', (e) => {
 document.getElementById('action-filters').addEventListener('click', (e) => {
   if (!e.target.dataset.action) return;
   const action = e.target.dataset.action;
-  
+
   if (action === 'all') {
     activeActions = new Set(['all']);
   } else {
@@ -1409,11 +1428,11 @@ document.getElementById('action-filters').addEventListener('click', (e) => {
     }
     if (!activeActions.size) activeActions = new Set(['all']);
   }
-  
+
   document.querySelectorAll('#action-filters .filter-btn').forEach(btn => {
     btn.classList.toggle('active', activeActions.has(btn.dataset.action));
   });
-  
+
   render();
 });
 
@@ -1729,7 +1748,7 @@ function renderChecklist() {
       var key = itemKey(item);
       var done = checklistDone[key] ? 'checked' : '';
       var doneClass = done ? ' done' : '';
-      var act = (item.action || '').toLowerCase();
+      var act = updateType(item);
       var actionClass = act === 'new' ? 'cl-new-tag' : (act === 'deprecated' || act === 'deleted') ? 'cl-action-tag' : 'cl-changed-tag';
       var impColor = 'var(--' + item.impact.level + ')';
       var desc = item.plainEnglish || escHtml((item.description || '').replace(/See More.*$/i, ''));
@@ -1739,7 +1758,9 @@ function renderChecklist() {
       html += '  <div class="cl-content">';
       html += '    <div class="cl-title">' + escHtml(item.title) + '</div>';
       html += '    <div class="cl-meta">';
-      html += '      <span class="cl-meta-tag ' + actionClass + '">' + escHtml(item.action) + '</span>';
+      html += '      <span class="cl-meta-tag ' + actionClass + '">' + escHtml(act || 'Review') + '</span>';
+      if (item.action) html += '      <span class="cl-meta-tag cl-enablement-tag">' + escHtml(item.action) + '</span>';
+      if (item.majorOrMinor) html += '      <span class="cl-meta-tag cl-enablement-tag">' + escHtml(item.majorOrMinor) + '</span>';
       html += '      <span class="cl-meta-tag cl-enablement-tag">' + escHtml(item.enablement || '-') + '</span>';
       html += '      <span class="cl-meta-tag cl-enablement-tag" style="color:' + impColor + '">' + item.impact.label + '</span>';
       html += '    </div>';
@@ -1769,12 +1790,10 @@ function itemKey(item) {
 function classifyItem(item) {
   var action = (item.action || '').toLowerCase();
   var enablement = (item.enablement || '').toLowerCase();
-  var ref = (item.refNumber || '').toLowerCase();
-  var isDep = action === 'deprecated' || action === 'deleted' || ref === 'deprecated';
-  if (isDep) return 'action_required';
-  if (action === 'changed' && ['major', 'required', 'automatically on', ''].indexOf(enablement) !== -1) return 'action_required';
-  if (action === 'new' && ['major', 'required'].indexOf(enablement) !== -1) return 'review_test';
-  if (action === 'changed' && ['minor', 'customer configured'].indexOf(enablement) !== -1) return 'review_test';
+  var changeType = updateType(item);
+  var size = (item.majorOrMinor || '').toLowerCase();
+  if (changeType === 'deprecated' || changeType === 'deleted' || action === 'required') return 'action_required';
+  if (action === 'recommended' || size === 'major' || enablement === 'customer configured' || changeType === 'changed') return 'review_test';
   return 'informational';
 }
 
@@ -1818,7 +1837,8 @@ function exportChecklist(format) {
       totalItems: relevant.length,
       items: relevant.map(function(i) {
         return {
-          title: i.title, action: i.action, enablement: i.enablement,
+          title: i.title, changeType: updateType(i), action: i.action,
+          majorOrMinor: i.majorOrMinor, enablement: i.enablement,
           impact: i.impact.label, module: i.module, category: classifyItem(i),
           done: checklistDone[itemKey(i)] || false, sapLink: i.sapLink,
           plainEnglish: i.plainEnglish
