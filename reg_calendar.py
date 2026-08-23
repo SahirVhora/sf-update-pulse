@@ -27,10 +27,10 @@ Or as part of the existing scrape pipeline:
 import json
 import re
 import sys
-import urllib.parse
-import urllib.request
 from datetime import datetime
 from pathlib import Path
+
+import requests
 
 HERE = Path(__file__).resolve().parent
 RESEARCH_DATA = HERE.parent / "research" / "research_data.json"
@@ -70,14 +70,18 @@ def _iso_to_date(raw):
 
 def _http_head(url):
     """Best-effort HEAD; returns (http_status or None, error string or None)."""
-    req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": HEAD_USER_AGENT})
     try:
-        with urllib.request.urlopen(req, timeout=HEAD_TIMEOUT) as resp:
-            return resp.status, None
-    except urllib.error.HTTPError as e:
-        # Some hosts reject HEAD - try GET with Range: bytes=0-0 as a fallback
-        return e.code, None
-    except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
+        resp = requests.head(
+            url,
+            headers={"User-Agent": HEAD_USER_AGENT},
+            timeout=HEAD_TIMEOUT,
+            allow_redirects=True,
+        )
+        return resp.status_code, None
+    except requests.exceptions.HTTPError as e:
+        # Some hosts reject HEAD - the status code carries the meaning.
+        return (e.response.status_code if e.response is not None else None), None
+    except (requests.exceptions.RequestException, TimeoutError, ConnectionError) as e:
         return None, str(e)
 
 
@@ -104,19 +108,21 @@ def build_reg_calendar(merge_into_output=None):
         days_to = (deadline - today).days if deadline else None
         url = entry.get("source_url") or ""
         status, error = (None, None) if not url else _http_head(url)
-        rows.append({
-            "label": entry.get("label", ""),
-            "date_raw": entry.get("date", ""),
-            "deadline_iso": deadline.isoformat() if deadline else None,
-            "regions": entry.get("regions", []),
-            "severity": entry.get("severity", "P2"),
-            "source_url": url,
-            "source_publication": entry.get("source_publication", "-"),
-            "days_to_deadline": days_to,
-            "url_status": status,
-            "url_error": error,
-            "trigger_pain_ids": _detect_trigger_pain_ids(payload, entry),
-        })
+        rows.append(
+            {
+                "label": entry.get("label", ""),
+                "date_raw": entry.get("date", ""),
+                "deadline_iso": deadline.isoformat() if deadline else None,
+                "regions": entry.get("regions", []),
+                "severity": entry.get("severity", "P2"),
+                "source_url": url,
+                "source_publication": entry.get("source_publication", "-"),
+                "days_to_deadline": days_to,
+                "url_status": status,
+                "url_error": error,
+                "trigger_pain_ids": _detect_trigger_pain_ids(payload, entry),
+            }
+        )
 
     rows.sort(key=lambda r: (r["deadline_iso"] or "9999-99-99", r["severity"]))
     digest = {
@@ -132,8 +138,16 @@ def build_reg_calendar(merge_into_output=None):
             "p2": sum(1 for r in rows if r["severity"] == "P2"),
             "reachable_urls": sum(1 for r in rows if (r["url_status"] or 0) < 400),
             "unreachable_urls": sum(1 for r in rows if r["url_error"] is not None),
-            "next_30d": sum(1 for r in rows if r["days_to_deadline"] is not None and 0 <= r["days_to_deadline"] <= 30),
-            "next_90d": sum(1 for r in rows if r["days_to_deadline"] is not None and 0 <= r["days_to_deadline"] <= 90),
+            "next_30d": sum(
+                1
+                for r in rows
+                if r["days_to_deadline"] is not None and 0 <= r["days_to_deadline"] <= 30
+            ),
+            "next_90d": sum(
+                1
+                for r in rows
+                if r["days_to_deadline"] is not None and 0 <= r["days_to_deadline"] <= 90
+            ),
         },
     }
 
@@ -183,19 +197,15 @@ def _render_markdown(digest):
         status = (
             "✓ " + str(r["url_status"])
             if r["url_status"] and r["url_status"] < 400
-            else ("FAIL: " + (r["url_error"] or str(r["url_status"])) if r["url_error"] or r["url_status"] else "(no URL)")
+            else (
+                "FAIL: " + (r["url_error"] or str(r["url_status"]))
+                if r["url_error"] or r["url_status"]
+                else "(no URL)"
+            )
         )
-        days = (
-            f"{r['days_to_deadline']}"
-            if r["days_to_deadline"] is not None
-            else "-"
-        )
+        days = f"{r['days_to_deadline']}" if r["days_to_deadline"] is not None else "-"
         labels = ", ".join(r["trigger_pain_ids"]) or "-"
-        link = (
-            f"[link]({r['source_url']})"
-            if r["source_url"]
-            else "(no URL)"
-        )
+        link = f"[link]({r['source_url']})" if r["source_url"] else "(no URL)"
         lines.append(
             f"| {r['date_raw']} | {r['label']} | {r['severity']} | {days} | {status} ({link}) | {labels} |"
         )
@@ -211,7 +221,9 @@ def detect_regulatory_shifts(prior_path=OUTPUT_JSON):
     prior = {}
     if Path(prior_path).exists():
         try:
-            prior = {d["label"]: d for d in json.loads(Path(prior_path).read_text()).get("deadlines", [])}
+            prior = {
+                d["label"]: d for d in json.loads(Path(prior_path).read_text()).get("deadlines", [])
+            }
         except Exception:
             prior = {}
     cur = build_reg_calendar()
@@ -223,7 +235,9 @@ def detect_regulatory_shifts(prior_path=OUTPUT_JSON):
             continue
         # URL regression
         if (prev.get("url_status") or 0) < 400 and (d.get("url_status") or 0) >= 400:
-            alerts.append(f"URL DOWN: {d['label']} was {prev.get('url_status')} now {d.get('url_status') or d.get('url_error')}")
+            alerts.append(
+                f"URL DOWN: {d['label']} was {prev.get('url_status')} now {d.get('url_status') or d.get('url_error')}"
+            )
     if cur["summary"]["next_30d"] > 0:
         alerts.append(f"WATCH: {cur['summary']['next_30d']} deadline(s) within 30 days.")
     return alerts
@@ -236,10 +250,12 @@ def main():
         return
     digest = build_reg_calendar()
     s = digest["summary"]
-    print(f"Saved {OUTPUT_JSON.name} + {OUTPUT_MD.name}: "
-          f"{s['total']} entries ({s['p0']} P0, {s['p1']} P1, {s['p2']} P2), "
-          f"{s['reachable_urls']} URLs reachable, {s['unreachable_urls']} unreachable, "
-          f"{s['next_30d']} within 30 days, {s['next_90d']} within 90 days.")
+    print(
+        f"Saved {OUTPUT_JSON.name} + {OUTPUT_MD.name}: "
+        f"{s['total']} entries ({s['p0']} P0, {s['p1']} P1, {s['p2']} P2), "
+        f"{s['reachable_urls']} URLs reachable, {s['unreachable_urls']} unreachable, "
+        f"{s['next_30d']} within 30 days, {s['next_90d']} within 90 days."
+    )
 
 
 if __name__ == "__main__":
