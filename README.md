@@ -1,6 +1,6 @@
 [![Weekly Scrape](https://github.com/SahirVhora/sf-release-update/actions/workflows/scrape.yml/badge.svg)](https://github.com/SahirVhora/sf-release-update/actions/workflows/scrape.yml)
 [![GitHub Pages](https://github.com/SahirVhora/sf-release-update/actions/workflows/pages/pages-build-deployment/badge.svg)](https://sahirvhora.github.io/sf-release-update)
-[![Last Updated](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/SahirVhora/sf-release-update/master/data/updates.json&label=last%20updated&query=%24.generated&color=teal)](https://sahirvhora.github.io/sf-release-update)
+[![Last Updated](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/SahirVhora/sf-release-update/main/data/updates.json&label=last%20updated&query=%24.metadata.lastScraped&color=teal)](https://sahirvhora.github.io/sf-release-update)
 
 # SAP SF Release Updates
 
@@ -15,7 +15,7 @@ Live tracker for SAP SuccessFactors release updates. Pulls the latest changes fr
 - **Weekly auto-refresh** - GitHub Actions scrapes the SAP What's New Viewer every Monday, discovers new versions automatically.
 - **SF Compass-style accordion sidebar** - modules expand to show New/Changed/Deprecated/Deleted counts. Click a module header to filter the right panel; click a sub-item to narrow further.
 - **Dark/Light theme toggle** - navy + gold dark theme (matches SF Compass), warm parchment light theme. Persisted to localStorage.
-- **Impact classification** - Critical / High / Medium / Low derived from SAP's Action + Enablement + Reference Number columns.
+- **Impact classification** - Critical / High / Medium / Low derived from SAP's Type, Major or Minor, Lifecycle, Action, and Enablement columns.
 - **Contextual plain-English summaries** - each update includes a unique "What this means for you" summary using the actual description text and timeline dates.
 - **Full search & filter** - by module, impact level, action type, version, and free text search.
 - **Release Readiness Checklist** - select your managed modules, generate a personalised checklist with Action Required / Review & Test / Informational categories, track progress with checkboxes (persisted in localStorage), export to JSON, and print.
@@ -30,7 +30,7 @@ weekly cron -> scraper.py -> data/updates.json -> index.html -> GitHub Pages
 ```
 
 - `scraper.py` - Playwright-based scraper. Discovers available versions from SAP's filter, iterates through each, extracts all pages, classifies impact, generates plain-English summaries, and outputs structured JSON.
-- `data/updates.json` - structured JSON (~680KB) with 525 items across 1H 2026 and 2H 2026 preview. Each item has impact classification, plain-English summary, release version tag, and absolute SAP links.
+- `data/updates.json` - structured current-release JSON across 1H 2026 and 2H 2026 preview. Each item preserves SAP's change type, size, lifecycle, action, and enablement alongside the impact classification, plain-English summary, release version tag, and absolute SAP links.
 - `index.html` - single-file viewer with dark/light theme, version switcher, accordion sidebar, search, and filters. Reads `data/updates.json`.
 
 ## Setup
@@ -62,7 +62,7 @@ The scraper auto-discovers available versions from SAP, so when new release data
 
 ## Deployment
 
-GitHub Pages serves from the `master` branch root. The `data/updates.json` is committed alongside `index.html`.
+GitHub Pages deploys from the `main` branch using `.github/workflows/deploy.yml`. The `data/updates.json` is committed alongside `index.html`.
 
 ```bash
 git add data/updates.json index.html scraper.py
@@ -72,7 +72,7 @@ git push
 
 ## SAP Data Quirks
 
-- **Deprecation detection**: SAP marks deprecated items with `action="Changed"` and `refNumber="Deprecated"`. The impact classifier checks both fields.
+- **Release-note semantics**: SAP exposes change Type, Major or Minor, Lifecycle, Action, and Enablement separately. The scraper preserves each field and treats Deprecated/Deleted as lifecycle states.
 - **Multi-line modules**: Some SAP items span multiple modules. The scraper takes the first (primary) module.
 - **Preview items**: Future-release items appear in the current release view with "Preview" prefix. These are tagged as the upcoming release version.
 - **Relative links**: SAP provides relative URLs; the scraper prepends `https://help.sap.com` and the viewer has a client-side fallback.

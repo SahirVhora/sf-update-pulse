@@ -12,6 +12,7 @@ import re
 import sys
 import urllib.parse
 import urllib.robotparser
+from contextlib import suppress
 from datetime import datetime
 from pathlib import Path
 
@@ -23,9 +24,10 @@ INDEX_FILE = Path(__file__).parent / "index.html"
 # How many pages to fetch (25 items per page). Set high, script stops when no more data.
 MAX_PAGES = 50
 
+
 def parse_release_version(version: str):
     """Return (year, half) for labels like '1H 2026' or '2H 2026 (Preview)'."""
-    match = re.match(r'([12])H\s+(\d{4})', (version or '').strip())
+    match = re.match(r"([12])H\s+(\d{4})", (version or "").strip())
     if not match:
         return None
     return int(match.group(2)), int(match.group(1))
@@ -82,89 +84,128 @@ def planning_window_versions(candidates: list[str], now: datetime) -> list[str]:
 
 
 # --- Impact Classification ---
-# Impact = f(Action, Enablement)
-def classify_impact(action: str, enablement: str, ref_number: str = "") -> dict:
-    """Return impact level and label based on SAP's Action + Enablement columns.
-    SAP quirk: deprecated items often have action='Changed' with refNumber='Deprecated'."""
+def classify_impact(
+    change_type: str,
+    lifecycle: str,
+    action: str,
+    enablement: str,
+    major_or_minor: str = "",
+) -> dict:
+    """Classify impact from SAP's distinct release-note dimensions.
+
+    SAP's current table exposes Type (New/Changed), Major or Minor,
+    Lifecycle, Action (Required/Recommended/Info only), and Enablement as
+    separate columns. Keeping those semantics separate prevents every row
+    falling through to Low when SAP changes a column label or meaning.
+    """
+    change_type = (change_type or "").strip().lower()
+    lifecycle = (lifecycle or "").strip().lower()
     action = (action or "").strip().lower()
     enablement = (enablement or "").strip().lower()
-    ref_number = (ref_number or "").strip().lower()
-    
-    # Detect deprecation from either the action field or the reference number
-    is_deprecated = action in ("deprecated", "deleted") or ref_number == "deprecated"
-    
-    if is_deprecated:
-        if enablement in ("required", "automatically on", ""):
-            return {"level": "critical", "label": "Critical", "color": "#ef4444"}
+    major_or_minor = (major_or_minor or "").strip().lower()
+
+    if lifecycle == "deleted":
+        return {"level": "critical", "label": "Critical", "color": "#ef4444"}
+    if lifecycle == "deprecated":
+        level = "critical" if action == "required" else "high"
+        return {
+            "level": level,
+            "label": level.title(),
+            "color": "#ef4444" if level == "critical" else "#f97316",
+        }
+
+    # Required work and forced major changes need preview-cycle ownership.
+    if action == "required" or (major_or_minor == "major" and enablement == "automatically on"):
         return {"level": "high", "label": "High", "color": "#f97316"}
-    
-    # High: Major enablement changes or forced changes
-    if enablement == "major":
-        return {"level": "high", "label": "High", "color": "#f97316"}
-    if action == "changed" and enablement in ("required", "automatically on"):
-        return {"level": "high", "label": "High", "color": "#f97316"}
-    
-    # Medium: Changes needing config or new major features
-    if action == "changed" and enablement in ("minor", "customer configured"):
+
+    # Recommended, major, or customer-configured changes merit review/testing.
+    if (
+        action == "recommended"
+        or major_or_minor == "major"
+        or enablement == "customer configured"
+        or (change_type == "changed" and enablement == "automatically on")
+    ):
         return {"level": "medium", "label": "Medium", "color": "#eab308"}
-    if action == "new" and enablement == "major":
-        return {"level": "medium", "label": "Medium", "color": "#eab308"}
-    
-    # Low: Everything else
+
     return {"level": "low", "label": "Low", "color": "#22c55e"}
 
 
-def generate_plain_english(action: str, enablement: str, title: str, description: str) -> str:
-    """Generate a contextual plain-English summary incorporating title and description details."""
+def generate_plain_english(
+    change_type: str,
+    lifecycle: str,
+    action: str,
+    enablement: str,
+    major_or_minor: str,
+    title: str,
+    description: str,
+) -> str:
+    """Generate a contextual plain-English summary from the current schema."""
+    change_type = (change_type or "").strip().lower()
+    lifecycle = (lifecycle or "").strip().lower()
     action = (action or "").strip().lower()
     enablement = (enablement or "").strip().lower()
-    
+    major_or_minor = (major_or_minor or "").strip().lower()
+
     # Extract first sentence for context
     first_sentence = description.split(".")[0].strip() if description else ""
     # Shorten very long sentences
     if len(first_sentence) > 200:
         first_sentence = first_sentence[:197] + "..."
-    
+    context_sentence = first_sentence
+    if context_sentence and not context_sentence.endswith((".", "!", "?", "...")):
+        context_sentence += "."
+
     # Extract dates if present
     import re
-    dates = re.findall(r'(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4}', description)
+
+    dates = re.findall(
+        r"(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4}",
+        description,
+    )
     date_str = ""
     if dates:
         # Find full date match (not just captured month group)
-        full_match = re.search(r'(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4}', description)
+        full_match = re.search(
+            r"(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4}",
+            description,
+        )
         if full_match:
             date_str = f" Timeline: {full_match.group(0)}."
-    
+
     # Detect urgency words
-    urgent_words = ["deleted", "removed", "no longer available", "end of", "must", "required"]
+    urgent_words = ["deleted", "removed", "no longer available", "end of", "must"]
     is_urgent = any(w in description.lower() for w in urgent_words)
-    
-    if action == "deprecated" or (action == "changed" and "deprecated" in description.lower()):
+
+    if lifecycle == "deprecated":
         if is_urgent:
             return f"Will stop working - you need a replacement.{date_str} Check the linked SAP Note for migration steps."
         return f"Being phased out. Start planning your move to the replacement now.{date_str}"
-    
-    if action == "deleted":
+
+    if lifecycle == "deleted":
         return f"Already removed. If you relied on this, switch to the alternative immediately.{date_str}"
-    
-    if action == "new":
-        if enablement == "major":
-            return f"Significant new capability - could change how you work. {first_sentence} Review config steps and test in sandbox first."
-        if enablement in ("minor", "customer configured"):
-            return f"Available when you're ready. {first_sentence} Test in non-production before enabling broadly."
-        return f"Active automatically - no setup needed. {first_sentence}"
-    
-    if action == "changed":
+
+    if change_type == "new":
+        if action == "required":
+            return f"New capability requiring action.{date_str} {context_sentence} Review the SAP steps and test before production."
+        if major_or_minor == "major":
+            return f"Significant new capability - could change how you work. {context_sentence} Review config steps and test in sandbox first."
+        if enablement == "customer configured":
+            return f"Available when you're ready. {context_sentence} Test in non-production before enabling broadly."
+        return f"Active automatically - no setup needed. {context_sentence}"
+
+    if change_type == "changed":
+        if action == "required":
+            return f"Action required.{date_str} {context_sentence} Assign an owner and validate the change before production."
         if is_urgent:
-            return f"Important change you need to act on.{date_str} Review the details - this affects your system automatically."
-        if enablement == "major":
-            return f"Significant update. {first_sentence} Plan configuration changes and communicate to users."
-        if enablement in ("minor", "customer configured"):
-            return f"Minor update - configure if useful. {first_sentence}"
-        return f"Updated automatically. {first_sentence}"
-    
+            return f"Important change to review.{date_str} {context_sentence}"
+        if major_or_minor == "major":
+            return f"Significant update. {context_sentence} Plan configuration changes and communicate to users."
+        if enablement == "customer configured" or action == "recommended":
+            return f"Minor update - configure if useful. {context_sentence}"
+        return f"Updated automatically. {context_sentence}"
+
     # Fallback with context
-    return f"Review this change. {first_sentence}"
+    return f"Review this change. {context_sentence}"
 
 
 # --- Scraping ---
@@ -181,7 +222,9 @@ def _check_robots(url: str, user_agent: str = "*") -> None:
     try:
         rp.read()
         if not rp.can_fetch(user_agent, url):
-            print(f"WARNING: robots.txt at {robots_url} disallows crawling {url}. Proceeding anyway (public page).")
+            print(
+                f"WARNING: robots.txt at {robots_url} disallows crawling {url}. Proceeding anyway (public page)."
+            )
     except Exception as exc:
         print(f"WARNING: Could not fetch robots.txt from {robots_url}: {exc}")
 
@@ -216,41 +259,75 @@ def read_table_alias(cells, column_index: dict[str, int], aliases) -> str:
     return ""
 
 
+def validate_items(items: list[dict]) -> None:
+    """Fail before publishing when the scraped semantic columns look broken."""
+    if not items:
+        raise ValueError("No release items were extracted")
+
+    change_types = {(item.get("changeType") or "").strip().lower() for item in items}
+    actions = {(item.get("action") or "").strip().lower() for item in items}
+    lifecycles = {(item.get("lifecycle") or "").strip().lower() for item in items}
+
+    if not change_types.intersection({"new", "changed"}):
+        raise ValueError("SAP Type column is missing expected New/Changed values")
+    if not actions.intersection({"required", "recommended", "info only"}):
+        raise ValueError("SAP Action column is missing expected action values")
+    if not lifecycles.intersection(
+        {"general availability", "restricted availability", "deprecated", "deleted"}
+    ):
+        raise ValueError("SAP Lifecycle column is missing expected lifecycle values")
+
+    recognized_signal = any(
+        (item.get("action") or "").strip().lower() in {"required", "recommended"}
+        or (item.get("lifecycle") or "").strip().lower() in {"deprecated", "deleted"}
+        for item in items
+    )
+    if recognized_signal and all(
+        (item.get("impact") or {}).get("level") == "low" for item in items
+    ):
+        raise ValueError("Impact classification collapsed to Low for every item")
+
+
 def scrape_with_playwright():
     """Use Playwright to extract all rows from the What's New Viewer, across all available versions."""
     try:
         from playwright.sync_api import sync_playwright
     except ImportError:
-        print("ERROR: playwright not installed. Run: pip install playwright && playwright install chromium")
+        print(
+            "ERROR: playwright not installed. Run: pip install playwright && playwright install chromium"
+        )
         sys.exit(1)
 
     _check_robots(BASE_URL)
     all_items = []
-    
+
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True, args=[
-            '--disable-blink-features=AutomationControlled',
-            '--no-sandbox',
-            '--disable-dev-shm-usage'
-        ])
+        browser = p.chromium.launch(
+            headless=True,
+            args=[
+                "--disable-blink-features=AutomationControlled",
+                "--no-sandbox",
+                "--disable-dev-shm-usage",
+            ],
+        )
         context = browser.new_context(
             user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
             viewport={"width": 1920, "height": 1080},
-            locale="en-US"
+            locale="en-US",
         )
         context.add_init_script("""
             Object.defineProperty(navigator, 'webdriver', {get: () => undefined});
             Object.defineProperty(navigator, 'plugins', {get: () => [1,2,3,4,5]});
         """)
         page = context.new_page()
-        
+
         print(f"Loading {BASE_URL} ...")
         try:
             page.goto(BASE_URL, wait_until="domcontentloaded", timeout=120000)
         except Exception as e:
             print(f"Initial load warning: {e}. Trying load event...")
             page.goto(BASE_URL, wait_until="load", timeout=120000)
-        
+
         # Dismiss cookie consent
         print("Checking for cookie consent banner...")
         try:
@@ -258,7 +335,7 @@ def scrape_with_playwright():
                 'button:has-text("Accept All"), button:has-text("Accept Cookies"), '
                 'button:has-text("OK"), button#truste-consent-button, '
                 'a:has-text("Accept All"), .trustarc-agree-btn',
-                timeout=15000
+                timeout=15000,
             )
             if consent_btn:
                 print("Dismissing cookie consent banner...")
@@ -266,26 +343,24 @@ def scrape_with_playwright():
                 page.wait_for_timeout(2000)
         except Exception as exc:
             print(f"No cookie consent banner found (or already accepted): {exc}")
-        
-        try:
+
+        with suppress(Exception):
             page.evaluate("""
                 const banners = document.querySelectorAll('#truste-consent-track, .trustarc-banner, [id*="consent_blackbar"]');
                 banners.forEach(b => b.style.display = 'none');
             """)
-        except Exception:
-            pass
-        
+
         print("Waiting for page to render...")
         try:
             page.wait_for_selector("table tbody tr, button:has-text('Product')", timeout=45000)
         except Exception as exc:
             print(f"WARNING: Selectors not found. Page might not have loaded fully: {exc}")
-        
+
         page.wait_for_timeout(5000)
-        
+
         # --- Discover available versions ---
         available_versions = []
-        
+
         # Strategy 1: Look for the version filter button's current display text
         try:
             ver_btn = page.query_selector('button:has-text("Software Version")')
@@ -294,7 +369,7 @@ def scrape_with_playwright():
                 print(f"  Version button text: '{btn_text}'")
                 ver_btn.click()
                 page.wait_for_timeout(2500)
-                
+
                 # The SAP UI5 dialog with version checkboxes should now be open.
                 # Strategy 2a: Look for SAP UI5 list items with version patterns
                 raw_candidates = page.evaluate("""
@@ -332,61 +407,67 @@ def scrape_with_playwright():
                     }
                 """)
                 print(f"  Raw version candidates: {raw_candidates}")
-                
+
                 # Keep versions in the planning window. SAP exposes placeholders
                 # many years ahead, but current + next year is useful for planning.
                 for v in raw_candidates:
                     v = v.strip()
                     if parse_release_version(v):
                         available_versions.append(v)
-                
+
                 # Close dropdown by pressing Escape (more reliable than clicking body)
                 page.keyboard.press("Escape")
                 page.wait_for_timeout(1000)
         except Exception as e:
             print(f"  Version discovery error: {e}")
-        
+
         # Strategy 3: Fallback to latest release whose preview has started.
         if not available_versions:
             print("  No versions found via dropdown. Using latest published release fallback.")
             available_versions = [default_published_version(datetime.now())]
-        
+
         # Deduplicate and sort (1H before 2H). Prefer "(Preview)" variants when duplicates exist.
         seen_ver = {}
         for v in available_versions:
             v = v.strip()
-            key = re.sub(r'\s*\(Preview\)\s*', '', v).strip()
+            key = re.sub(r"\s*\(Preview\)\s*", "", v).strip()
             # Keep the variant with "(Preview)" if both exist
-            if key not in seen_ver or ('(Preview)' in v and '(Preview)' not in seen_ver[key]):
+            if key not in seen_ver or ("(Preview)" in v and "(Preview)" not in seen_ver[key]):
                 seen_ver[key] = v
         deduped = list(seen_ver.values())
-        available_versions = sorted(deduped, key=lambda x: (re.search(r'\d{4}', x).group() if re.search(r'\d{4}', x) else '0') + ('0' if '1H' in x else '1'))
+        available_versions = sorted(
+            deduped,
+            key=lambda x: (
+                (re.search(r"\d{4}", x).group() if re.search(r"\d{4}", x) else "0")
+                + ("0" if "1H" in x else "1")
+            ),
+        )
         available_versions = planning_window_versions(available_versions, datetime.now())
-        
+
         # Append "(Preview)" to 2H versions whose production date is still in the future
         final_versions = []
         for v in available_versions:
-            match = re.match(r'2H\s+(\d{4})', v)
+            match = re.match(r"2H\s+(\d{4})", v)
             if match:
                 year = int(match.group(1))
                 prod_date = datetime(year, 11, 15)
-                if prod_date > datetime.now() and '(Preview)' not in v:
-                    v = v + ' (Preview)'
+                if prod_date > datetime.now() and "(Preview)" not in v:
+                    v = v + " (Preview)"
             final_versions.append(v)
         available_versions = final_versions
-        
+
         print(f"Selected versions: {available_versions}")
-        
+
         # --- Scrape each version ---
         prev_first_title = None  # Track first item of previous version to detect failed switches
         for ver_idx, version_name in enumerate(available_versions):
             print(f"\n--- Scraping version: {version_name} ---")
-            
+
             if ver_idx > 0:
                 # Switch to this version
                 try:
                     # Strip "(Preview)" for lookup since SAP's dropdown uses plain version names
-                    lookup_name = re.sub(r'\s*\(Preview\)\s*', '', version_name).strip()
+                    lookup_name = re.sub(r"\s*\(Preview\)\s*", "", version_name).strip()
                     ver_btn = page.query_selector('button:has-text("Software Version")')
                     if ver_btn:
                         ver_btn.click()
@@ -397,7 +478,7 @@ def scrape_with_playwright():
                             option = page.query_selector(f'[title="{lookup_name}"]')
                         if not option:
                             # Try SAP UI5 checkbox label
-                            labels = page.query_selector_all('.sapMCbLabel, label')
+                            labels = page.query_selector_all(".sapMCbLabel, label")
                             for lbl in labels:
                                 if lbl.inner_text().strip() == lookup_name:
                                     option = lbl
@@ -417,7 +498,7 @@ def scrape_with_playwright():
                 except Exception as e:
                     print(f"  Failed to switch version: {e}")
                     continue
-            
+
             # Detect column order from <th> headers in the table thead (auto-adapts
             # if SAP reorders or renames columns). Falls back to legacy positional
             # indices when the header row is missing.
@@ -430,8 +511,13 @@ def scrape_with_playwright():
             except Exception as e:
                 print(f"  Column header detection failed: {e}")
 
-            def _cell(cells, field: str, fallback: int) -> str:
-                return read_table_cell(cells, column_index, field, fallback)
+            def _cell(
+                cells,
+                field: str,
+                fallback: int,
+                current_column_index=column_index,
+            ) -> str:
+                return read_table_cell(cells, current_column_index, field, fallback)
 
             # Extract all pages for this version
             page_num = 1
@@ -441,36 +527,48 @@ def scrape_with_playwright():
                 if not rows:
                     print(f"  No rows on page {page_num}. Done with {version_name}.")
                     break
-                
+
                 # --- Guards against failed version switches ---
                 # Guard 1: if the first page yields 0 valid rows, the version has no data
                 valid_row_count = sum(1 for row in rows if len(row.query_selector_all("td")) >= 8)
                 if page_num == 1 and valid_row_count == 0:
-                    print(f"  ⚠ Version {version_name} returned 0 items - skipping (no data published yet).")
+                    print(
+                        f"  ⚠ Version {version_name} returned 0 items - skipping (no data published yet)."
+                    )
                     break
-                
+
                 # Guard 2: if first item matches previous version's first item, the switch likely failed
                 if ver_idx > 0 and page_num == 1 and prev_first_title:
                     first_cell = rows[0].query_selector("td")
                     if first_cell:
-                        current_first_title = (first_cell.inner_text() or "").strip().removeprefix("Preview ")
+                        current_first_title = (
+                            (first_cell.inner_text() or "").strip().removeprefix("Preview ")
+                        )
                         if current_first_title == prev_first_title:
-                            print(f"  ⚠ Version switch to {version_name} appears to have failed - first item matches {prev_first_title[:60]}...")
-                            print(f"  Skipping {version_name} (data unchanged from previous version).")
+                            print(
+                                f"  ⚠ Version switch to {version_name} appears to have failed - first item matches {prev_first_title[:60]}..."
+                            )
+                            print(
+                                f"  Skipping {version_name} (data unchanged from previous version)."
+                            )
                             break
                 # --- End guards ---
-                
+
                 for row in rows:
                     cells = row.query_selector_all("td")
                     if len(cells) < 8:
                         continue
 
                     title = (cells[0].inner_text() or "").strip().removeprefix("Preview ")
-                    description = (cells[1].inner_text() or "").strip().removesuffix("See More").strip()
+                    description = (
+                        (cells[1].inner_text() or "").strip().removesuffix("See More").strip()
+                    )
                     product = (cells[2].inner_text() or "").strip()
                     module_raw = (cells[3].inner_text() or "").strip()
                     module = module_raw.split("\n")[0].strip()
                     feature = _cell(cells, "Feature", 5)
+                    change_type = _cell(cells, "Type", 6)
+                    major_or_minor = _cell(cells, "Major or Minor", 7)
                     lifecycle = _cell(cells, "Lifecycle", 8)
                     action = _cell(cells, "Action", 9)
                     enablement = _cell(cells, "Enablement", 10)
@@ -512,11 +610,10 @@ def scrape_with_playwright():
                         or _cell(cells, "Valid as of", 14)
                         or _cell(cells, "Valid as Of", 14)
                     )
-                    latest_revision = (
-                        _cell(cells, "Latest Revision", 15)
-                        or _cell(cells, "Latest revision", 15)
+                    latest_revision = _cell(cells, "Latest Revision", 15) or _cell(
+                        cells, "Latest revision", 15
                     )
-                    
+
                     see_more_link = ""
                     see_more_el = cells[1].query_selector("a")
                     if see_more_el:
@@ -524,44 +621,68 @@ def scrape_with_playwright():
                         if href.startswith("/"):
                             href = "https://help.sap.com" + href
                         see_more_link = href
-                    
-                    impact = classify_impact(action, enablement, ref_number)
-                    plain_english = generate_plain_english(action, enablement, title, description)
-                    
-                    all_items.append({
-                        "title": title,
-                        "description": description,
-                        "product": product,
-                        "module": module,
-                        "feature": feature,
-                        "lifecycle": lifecycle,
-                        "action": action,
-                        "enablement": enablement,
-                        "refNumber": ref_number,
-                        "demo": demo,
-                        "version": version_field,
-                        "validAsOf": valid_as_of,
-                        "latestRevision": latest_revision,
-                        "sapLink": see_more_link,
-                        "impact": impact,
-                        "plainEnglish": plain_english,
-                        "releaseVersion": version_name
-                    })
+
+                    impact = classify_impact(
+                        change_type,
+                        lifecycle,
+                        action,
+                        enablement,
+                        major_or_minor,
+                    )
+                    plain_english = generate_plain_english(
+                        change_type,
+                        lifecycle,
+                        action,
+                        enablement,
+                        major_or_minor,
+                        title,
+                        description,
+                    )
+
+                    all_items.append(
+                        {
+                            "title": title,
+                            "description": description,
+                            "product": product,
+                            "module": module,
+                            "feature": feature,
+                            "changeType": change_type,
+                            "majorOrMinor": major_or_minor,
+                            "lifecycle": lifecycle,
+                            "action": action,
+                            "enablement": enablement,
+                            "refNumber": ref_number,
+                            "demo": demo,
+                            "version": version_field,
+                            "validAsOf": valid_as_of,
+                            "latestRevision": latest_revision,
+                            "sapLink": see_more_link,
+                            "impact": impact,
+                            "plainEnglish": plain_english,
+                            "releaseVersion": version_name,
+                        }
+                    )
                     version_items += 1
-                
+
                 # After first page of a successful scrape, snapshot the first item for next version's guard
                 if page_num == 1 and version_items > 0:
                     first_cell = rows[0].query_selector("td")
                     if first_cell:
-                        prev_first_title = (first_cell.inner_text() or "").strip().removeprefix("Preview ")
-                
-                print(f"  Page {page_num}: {len(rows)} rows (total for {version_name}: {version_items})")
-                
+                        prev_first_title = (
+                            (first_cell.inner_text() or "").strip().removeprefix("Preview ")
+                        )
+
+                print(
+                    f"  Page {page_num}: {len(rows)} rows (total for {version_name}: {version_items})"
+                )
+
                 # Next page — click the page-number button matching page_num + 1.
                 # SAP redesigned their UI to use numbered pagination buttons instead
                 # of a "Next page" button. Each button has class "pagination".
                 next_page_num = page_num + 1
-                next_btn = page.query_selector(f'button.pagination:not([disabled])[title="{next_page_num}"]')
+                next_btn = page.query_selector(
+                    f'button.pagination:not([disabled])[title="{next_page_num}"]'
+                )
                 if not next_btn:
                     # Try matching by exact text content instead of title
                     all_page_btns = page.query_selector_all("button.pagination:not([disabled])")
@@ -570,24 +691,22 @@ def scrape_with_playwright():
                         if txt == str(next_page_num):
                             next_btn = btn
                             break
-                
+
                 if not next_btn:
                     print(f"  No 'Next' button. Done with {version_name}.")
                     break
-                
+
                 if next_btn.get_attribute("disabled") is not None:
                     print(f"  Next disabled. Reached last page of {version_name}.")
                     break
-                
+
                 next_btn.click()
                 page.wait_for_timeout(2000)
                 page_num += 1
-        
+
         browser.close()
-    
+
     return all_items
-
-
 
 
 def calculate_release_dates(available_versions, scraped_at=None):
@@ -609,10 +728,10 @@ def calculate_release_dates(available_versions, scraped_at=None):
 
     for version in available_versions:
         # Normalize: strip " (Preview)" suffix for key lookup
-        clean_version = re.sub(r'\s*\(Preview\)\s*', '', version).strip()
+        clean_version = re.sub(r"\s*\(Preview\)\s*", "", version).strip()
 
         # Parse version like "1H 2026" or "2H 2026"
-        match = re.match(r'(\d)H\s+(\d{4})', clean_version)
+        match = re.match(r"(\d)H\s+(\d{4})", clean_version)
         if not match:
             print(f"  [WARN] Could not parse version: '{version}', skipping release dates.")
             continue
@@ -636,10 +755,7 @@ def calculate_release_dates(available_versions, scraped_at=None):
         except ValueError:
             pass
 
-        release_dates[clean_version] = {
-            "preview": preview_str,
-            "production": production_str
-        }
+        release_dates[clean_version] = {"preview": preview_str, "production": production_str}
 
     return release_dates
 
@@ -674,7 +790,11 @@ def replace_meta_content(markup: str, selector_type: str, selector_value: str, c
     updated, count = re.subn(pattern, replacement, markup, count=1)
     if count:
         return updated
-    insert_after = '<meta name="twitter:card" content="summary_large_image">' if selector_type == "name" and selector_value.startswith("twitter:") else '<meta property="og:url" content="https://sahirvhora.github.io/sf-release-update/">'
+    insert_after = (
+        '<meta name="twitter:card" content="summary_large_image">'
+        if selector_type == "name" and selector_value.startswith("twitter:")
+        else '<meta property="og:url" content="https://sahirvhora.github.io/sf-release-update/">'
+    )
     tag = f'<meta {selector_type}="{selector_value}" content="{escaped}">'
     return updated.replace(insert_after, insert_after + "\n" + tag, 1)
 
@@ -691,7 +811,9 @@ def update_index_metadata(output: dict) -> None:
     markup = replace_meta_content(markup, "name", "twitter:description", description)
     markup = replace_meta_content(markup, "name", "description", description)
     title_escaped = html.escape(title, quote=False)
-    markup = re.sub(r"<title>.*?</title>", f"<title>{title_escaped}</title>", markup, count=1, flags=re.DOTALL)
+    markup = re.sub(
+        r"<title>.*?</title>", f"<title>{title_escaped}</title>", markup, count=1, flags=re.DOTALL
+    )
     INDEX_FILE.write_text(markup, encoding="utf-8")
     print(f"Updated static index.html metadata: {title}")
 
@@ -702,14 +824,14 @@ def main():
     print(f"Target: {BASE_URL}")
     print(f"Time: {datetime.now().isoformat()}")
     print("=" * 60)
-    
+
     # Try Playwright extraction
     items = scrape_with_playwright()
-    
+
     if not items:
         print("ERROR: No items extracted. Check the SAP page structure.")
         sys.exit(1)
-    
+
     # Deduplicate within each release only. The same title can legitimately appear
     # in current and future planning releases, and the version switcher needs to
     # show the count/details for each release independently.
@@ -720,10 +842,12 @@ def main():
         if key not in seen:
             seen.add(key)
             unique.append(item)
-    
+
     print(f"\\nTotal extracted: {len(items)}")
     print(f"After dedup: {len(unique)}")
-    
+
+    validate_items(unique)
+
     # Annotate cross-version duplicates: items with identical (title, refNumber)
     # that appear in multiple releases get an `alsoInVersion` list so the
     # frontend can display a note (e.g. "Also appears in 1H 2026").
@@ -731,7 +855,7 @@ def main():
     for item in unique:
         key = (item["title"], item.get("refNumber", ""))
         title_ref_map.setdefault(key, []).append(item)
-    for key, matches in title_ref_map.items():
+    for matches in title_ref_map.values():
         versions = list({m["releaseVersion"] for m in matches})
         if len(versions) > 1:
             for item in matches:
@@ -739,30 +863,30 @@ def main():
     cross_count = sum(1 for item in unique if "alsoInVersion" in item)
     if cross_count:
         print(f"Cross-version duplicates annotated: {cross_count} items")
-    
+
     # Count by impact
     impact_counts = {}
     for item in unique:
         level = item["impact"]["level"]
         impact_counts[level] = impact_counts.get(level, 0) + 1
     print(f"Impact breakdown: {impact_counts}")
-    
+
     # Count by module
     module_counts = {}
     for item in unique:
         mod = item["module"] or "Unknown"
         module_counts[mod] = module_counts.get(mod, 0) + 1
     print(f"Top modules: {dict(sorted(module_counts.items(), key=lambda x: -x[1])[:10])}")
-    
+
     # Count by version
     version_counts = {}
     for item in unique:
         ver = item.get("releaseVersion", "Unknown")
         version_counts[ver] = version_counts.get(ver, 0) + 1
     print(f"Version breakdown: {version_counts}")
-    
+
     # Build output
-    available_versions = sorted(set(item.get("releaseVersion", "Unknown") for item in unique))
+    available_versions = sorted({item.get("releaseVersion", "Unknown") for item in unique})
     scraped_at = datetime.now()
     release_dates = calculate_release_dates(available_versions, scraped_at)
     output = {
@@ -773,20 +897,20 @@ def main():
             "lastScraped": scraped_at.strftime("%Y-%m-%d %H:%M UTC"),
             "availableVersions": available_versions,
             "versionCounts": version_counts,
-            "releaseDates": release_dates
+            "releaseDates": release_dates,
         },
-        "items": unique
+        "items": unique,
     }
-    
+
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    with open(OUTPUT_FILE, "w") as f:
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2, ensure_ascii=False)
+        f.write("\n")
     update_index_metadata(output)
-    
+
     print(f"\nSaved {len(unique)} items to {OUTPUT_FILE}")
     print("Done!")
 
 
 if __name__ == "__main__":
     main()
-
