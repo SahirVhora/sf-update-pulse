@@ -1,16 +1,16 @@
 {
   "metadata": {
     "source": "https://help.sap.com/whats-new/8fcf4960eea24f78b1d7613da406a885",
-    "scrapedAt": "2026-08-24T06:56:47.897711",
-    "totalItems": 540,
-    "lastScraped": "2026-08-24 06:56 UTC",
+    "scrapedAt": "2026-08-31T12:46:55.061509",
+    "totalItems": 546,
+    "lastScraped": "2026-08-31 12:46 UTC",
     "availableVersions": [
       "1H 2026",
       "2H 2026 (Preview)"
     ],
     "versionCounts": {
-      "1H 2026": 532,
-      "2H 2026 (Preview)": 8
+      "1H 2026": 535,
+      "2H 2026 (Preview)": 11
     },
     "releaseDates": {
       "1H 2026": {
@@ -24,6 +24,81 @@
     }
   },
   "items": [
+    {
+      "title": "Contingent Worker Account Type Is Supported",
+      "description": "Besides employee and onboardee account types, you can now also manage contingent worker account type. A new option, Enable Contingent Worker Account Type, has been added to the Company System and Logo Settings admin page. After you enabled this option, all the incoming contingent worker users created in Employee Central will be created as Contingent Worker account type.",
+      "product": "Platform",
+      "module": "Identity and Access Management",
+      "feature": "User Account Management",
+      "changeType": "Changed",
+      "majorOrMinor": "Major",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Customer configured",
+      "refNumber": "PLA-45348",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "Aug 27, 2026",
+      "latestRevision": "Aug 28, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/8ed80052dc88499aaea4218d692ecbbf.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "medium",
+        "label": "Medium",
+        "color": "#eab308"
+      },
+      "plainEnglish": "Significant update. Besides employee and onboardee account types, you can now also manage contingent worker account type. Plan configuration changes and communicate to users.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "SAP SuccessFactors Workforce Scheduling",
+      "description": "SAP SuccessFactors Workforce Scheduling helps shift planners build smarter schedules so that shift workers with the right skills are available when and where they're needed most. Workforce demand can be defined centrally. This includes specifying how many employees with which skills are needed at what time. Based on this demand, shift planners can automatically match shift workers to shifts and receive real-time alerts when coverage gaps or skill shortages arise.",
+      "product": "Workforce Scheduling",
+      "module": "Time Management",
+      "feature": "Not Applicable",
+      "changeType": "New",
+      "majorOrMinor": "Major",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Customer configured",
+      "refNumber": "TIM-55000",
+      "demo": "Planning and Publishing Shift Schedules Based on Workforce Demand",
+      "version": "1H 2026\n2H 2026",
+      "validAsOf": "Sep 1, 2026",
+      "latestRevision": "Aug 28, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/105c7eda04eb4ed181e5ae430ca81e1a.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "medium",
+        "label": "Medium",
+        "color": "#eab308"
+      },
+      "plainEnglish": "Significant new capability - could change how you work. SAP SuccessFactors Workforce Scheduling helps shift planners build smarter schedules so that shift workers with the right skills are available when and where they're needed most. Review config steps and test in sandbox first.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "Joule Assistants and Agents in Restricted Availability - August 2026",
+      "description": "We're introducing more AI assistants and agents in restricted availability as part of the August 2026 release.",
+      "product": "Employee Central\nPlatform",
+      "module": "Company Organization",
+      "feature": "Joule",
+      "changeType": "New",
+      "majorOrMinor": "Major",
+      "lifecycle": "Restricted Availability",
+      "action": "Info only",
+      "enablement": "Contact Customer Engagement Executive or Account Manager",
+      "refNumber": "KM-23674",
+      "demo": "",
+      "version": "1H 2026\n2H 2026",
+      "validAsOf": "Aug 26, 2026",
+      "latestRevision": "Aug 26, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/e9989dc2e5b046ec929e2ad5e8305d24/436aa5f220414cc89dcf805b6ceb10a1.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "medium",
+        "label": "Medium",
+        "color": "#eab308"
+      },
+      "plainEnglish": "Significant new capability - could change how you work. We're introducing more AI assistants and agents in restricted availability as part of the August 2026 release. Review config steps and test in sandbox first.",
+      "releaseVersion": "1H 2026"
+    },
     {
       "title": "Upsert Support in OneTimeDeduction and RecurringDeduction OData APIs",
       "description": "OneTimeDeduction and RecurringDeduction APIs in Employee Central Compensation now support upsert operations.",
@@ -72,6 +147,31 @@
         "color": "#eab308"
       },
       "plainEnglish": "Important change to review. Users can now synchronize holidays through the end of the next calendar year from the SAP SuccessFactors app in Microsoft Teams.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "Default User Preference Settings for Org Chart",
+      "description": "As an administrator, you can now set system-wide defaults for user preferences of displaying reports and contingent workers in the Org Chart. The new controls let you define the initial state users see when they open the Org Chart.",
+      "product": "Employee Central\nPlatform",
+      "module": "Company Organization",
+      "feature": "Organization Chart",
+      "changeType": "New",
+      "majorOrMinor": "Minor",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "ECT-255988",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Aug 14, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/f5bc680bcdfb4c1fa06a55dd92d2c663.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "low",
+        "label": "Low",
+        "color": "#22c55e"
+      },
+      "plainEnglish": "Active automatically - no setup needed. As an administrator, you can now set system-wide defaults for user preferences of displaying reports and contingent workers in the Org Chart.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -425,8 +525,8 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "HR Knowledge Assistant and HR Knowledge Orchestration Agent: Restricted Availability Release - July 2026",
-      "description": "You can now use the HR Knowledge Assistant in Joule to access HR research, industry insights, and best practices enriched with guidance from Galileo by The Josh Bersin Company. The assistant includes the HR Knowledge Orchestration Agent, which retrieves research-backed HR insights from trusted knowledge providers directly within Joule.",
+      "title": "HR Knowledge Assistant and HR Knowledge Agent: Restricted Availability Release - July 2026",
+      "description": "You can now use the HR Knowledge Assistant in Joule to access HR research, industry insights, and best practices enriched with guidance from Galileo by The Josh Bersin Company. The assistant includes the HR Knowledge Agent, which retrieves research-backed HR insights from trusted knowledge providers directly within Joule.",
       "product": "Platform",
       "module": "SAP Business AI",
       "feature": "Joule",
@@ -950,31 +1050,6 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "Support for Creating Blended Tables in Optimized Story Experience",
-      "description": "You can create tables with data from different data sources in your Story reports in the optimized story experience.",
-      "product": "Platform",
-      "module": "Reporting",
-      "feature": "Story Reports",
-      "changeType": "New",
-      "majorOrMinor": "Major",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "FPA00-31258",
-      "demo": "",
-      "version": "1H 2026\n2H 2026",
-      "validAsOf": "Aug 17, 2026",
-      "latestRevision": "Jul 17, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/1433683cc6104322ba987097ce97ccbd.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "high",
-        "label": "High",
-        "color": "#f97316"
-      },
-      "plainEnglish": "Significant new capability - could change how you work. You can create tables with data from different data sources in your Story reports in the optimized story experience. Review config steps and test in sandbox first.",
-      "releaseVersion": "1H 2026"
-    },
-    {
       "title": "Input Parameters in Calculated Columns of Query Designer",
       "description": "You can now use input parameters in calculated columns within Query Designer, enabling more flexible and dynamic report calculations.",
       "product": "Platform",
@@ -997,6 +1072,31 @@
         "color": "#f97316"
       },
       "plainEnglish": "Significant new capability - could change how you work. You can now use input parameters in calculated columns within Query Designer, enabling more flexible and dynamic report calculations. Review config steps and test in sandbox first.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "Support for Creating Blended Tables in Optimized Story Experience",
+      "description": "You can create tables with data from different data sources in your Story reports in the optimized story experience.",
+      "product": "Platform",
+      "module": "Reporting",
+      "feature": "Story Reports",
+      "changeType": "New",
+      "majorOrMinor": "Major",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "FPA00-31258",
+      "demo": "",
+      "version": "1H 2026\n2H 2026",
+      "validAsOf": "Aug 17, 2026",
+      "latestRevision": "Jul 17, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/1433683cc6104322ba987097ce97ccbd.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "high",
+        "label": "High",
+        "color": "#f97316"
+      },
+      "plainEnglish": "Significant new capability - could change how you work. You can create tables with data from different data sources in your Story reports in the optimized story experience. Review config steps and test in sandbox first.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -3400,31 +3500,6 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "Survey Cards on the Latest Home Page Are Deleted",
-      "description": "Survey cards on the latest home page are Deleted on May 15, 2026.",
-      "product": "Platform",
-      "module": "User Experience",
-      "feature": "Home Page",
-      "changeType": "Changed",
-      "majorOrMinor": "",
-      "lifecycle": "Deleted",
-      "action": "Required",
-      "enablement": "Automatically on",
-      "refNumber": "WEF-166950",
-      "demo": "Not Applicable",
-      "version": "1H 2026\n2H 2025",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 10, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/59a9075614b747d9ab07eb85bb0e3565.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "critical",
-        "label": "Critical",
-        "color": "#ef4444"
-      },
-      "plainEnglish": "Already removed. If you relied on this, switch to the alternative immediately. Timeline: May 15, 2026.",
-      "releaseVersion": "1H 2026"
-    },
-    {
       "title": "Deprecation of Legacy Home Page Experience",
       "description": "The legacy home page experience (introduced in 2H 2020) will reach End of Development on November 25, 2025 and will be Deleted on November 13, 2026.",
       "product": "Platform",
@@ -3447,6 +3522,31 @@
         "color": "#ef4444"
       },
       "plainEnglish": "Will stop working - you need a replacement. Timeline: November 25, 2025. Check the linked SAP Note for migration steps.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "Survey Cards on the Latest Home Page Are Deleted",
+      "description": "Survey cards on the latest home page are Deleted on May 15, 2026.",
+      "product": "Platform",
+      "module": "User Experience",
+      "feature": "Home Page",
+      "changeType": "Changed",
+      "majorOrMinor": "",
+      "lifecycle": "Deleted",
+      "action": "Required",
+      "enablement": "Automatically on",
+      "refNumber": "WEF-166950",
+      "demo": "Not Applicable",
+      "version": "1H 2026\n2H 2025",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 10, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/59a9075614b747d9ab07eb85bb0e3565.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "critical",
+        "label": "Critical",
+        "color": "#ef4444"
+      },
+      "plainEnglish": "Already removed. If you relied on this, switch to the alternative immediately. Timeline: May 15, 2026.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -3575,31 +3675,6 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "Update Start Date for Started Assignment Applications",
-      "description": "Assignment owners and co-owners can now edit the start date of assignment applications even after the assignment has started.",
-      "product": "Career and Talent Development\nOpportunity Marketplace",
-      "module": "Opportunity Marketplace",
-      "feature": "Opportunity Marketplace Assignments",
-      "changeType": "Changed",
-      "majorOrMinor": "Minor",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "OMA-2839",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/007b78cc48f74d0eadba03b09015dd5b.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "medium",
-        "label": "Medium",
-        "color": "#eab308"
-      },
-      "plainEnglish": "Updated automatically. Assignment owners and co-owners can now edit the start date of assignment applications even after the assignment has started.",
-      "releaseVersion": "1H 2026"
-    },
-    {
       "title": "Hiding Attributes for Opportunity Marketplace Assignments",
       "description": "As an administrator, you can now hide the Attributes section for Opportunity Marketplace assignments.",
       "product": "Career and Talent Development\nOpportunity Marketplace",
@@ -3622,6 +3697,31 @@
         "color": "#eab308"
       },
       "plainEnglish": "Updated automatically. As an administrator, you can now hide the Attributes section for Opportunity Marketplace assignments.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "Update Start Date for Started Assignment Applications",
+      "description": "Assignment owners and co-owners can now edit the start date of assignment applications even after the assignment has started.",
+      "product": "Career and Talent Development\nOpportunity Marketplace",
+      "module": "Opportunity Marketplace",
+      "feature": "Opportunity Marketplace Assignments",
+      "changeType": "Changed",
+      "majorOrMinor": "Minor",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "OMA-2839",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/007b78cc48f74d0eadba03b09015dd5b.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "medium",
+        "label": "Medium",
+        "color": "#eab308"
+      },
+      "plainEnglish": "Updated automatically. Assignment owners and co-owners can now edit the start date of assignment applications even after the assignment has started.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -3975,31 +4075,6 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "Print More Goals at Once in Goal Management",
-      "description": "Users can now print up to 20 goals at once in the latest Goal Management.",
-      "product": "Career and Talent Development\nPerformance & Goals\nSuccession & Development",
-      "module": "Career Development",
-      "feature": "Development Objectives\nGoal Management",
-      "changeType": "Changed",
-      "majorOrMinor": "Major",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "TGM-28131",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/10d6326474594f3e9dda0e22b715069b.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "high",
-        "label": "High",
-        "color": "#f97316"
-      },
-      "plainEnglish": "Significant update. Users can now print up to 20 goals at once in the latest Goal Management. Plan configuration changes and communicate to users.",
-      "releaseVersion": "1H 2026"
-    },
-    {
       "title": "Improved People Selector Experience in Goal Management",
       "description": "We enhanced the people selector on the Goal Management landing page with several usability improvements.",
       "product": "Career and Talent Development\nPerformance & Goals\nSuccession & Development",
@@ -4022,6 +4097,31 @@
         "color": "#f97316"
       },
       "plainEnglish": "Significant update. We enhanced the people selector on the Goal Management landing page with several usability improvements. Plan configuration changes and communicate to users.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "Print More Goals at Once in Goal Management",
+      "description": "Users can now print up to 20 goals at once in the latest Goal Management.",
+      "product": "Career and Talent Development\nPerformance & Goals\nSuccession & Development",
+      "module": "Career Development",
+      "feature": "Development Objectives\nGoal Management",
+      "changeType": "Changed",
+      "majorOrMinor": "Major",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "TGM-28131",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/10d6326474594f3e9dda0e22b715069b.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "high",
+        "label": "High",
+        "color": "#f97316"
+      },
+      "plainEnglish": "Significant update. Users can now print up to 20 goals at once in the latest Goal Management. Plan configuration changes and communicate to users.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -4775,31 +4875,6 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "Statement Generation Report for Bonus Assignment Statements",
-      "description": "You can now generate a report that includes detailed information to track the status of bonus assignment statements for users.",
-      "product": "Compensation",
-      "module": "Variable Pay",
-      "feature": "Rewards Statement",
-      "changeType": "Changed",
-      "majorOrMinor": "Minor",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "SFCMP-237522",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/d097a6428d1143e2aee28c6530fc8b9c.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "medium",
-        "label": "Medium",
-        "color": "#eab308"
-      },
-      "plainEnglish": "Updated automatically. You can now generate a report that includes detailed information to track the status of bonus assignment statements for users.",
-      "releaseVersion": "1H 2026"
-    },
-    {
       "title": "Business Section Fields from Multiple Goal Plans in the Statement Editor",
       "description": "You can now select certain standard fields from multiple business Goal Plan sections and add them to the Personal Rewards Statement when editing a compensation statement template in the statement editor.",
       "product": "Compensation",
@@ -4822,6 +4897,31 @@
         "color": "#f97316"
       },
       "plainEnglish": "Significant update. You can now select certain standard fields from multiple business Goal Plan sections and add them to the Personal Rewards Statement when editing a compensation statement template in the statement e... Plan configuration changes and communicate to users.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "Statement Generation Report for Bonus Assignment Statements",
+      "description": "You can now generate a report that includes detailed information to track the status of bonus assignment statements for users.",
+      "product": "Compensation",
+      "module": "Variable Pay",
+      "feature": "Rewards Statement",
+      "changeType": "Changed",
+      "majorOrMinor": "Minor",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "SFCMP-237522",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/d097a6428d1143e2aee28c6530fc8b9c.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "medium",
+        "label": "Medium",
+        "color": "#eab308"
+      },
+      "plainEnglish": "Updated automatically. You can now generate a report that includes detailed information to track the status of bonus assignment statements for users.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -5400,31 +5500,6 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "Support Multiple Benefit Enrollment Processes For A Legal Entity",
-      "description": "You can now create multiple Benefit Enrollment processes for the same Legal Entity. This allows you to define different sets of benefits and their respective enrollment period for the same legal entity.",
-      "product": "Employee Central",
-      "module": "Global Benefits",
-      "feature": "Global Benefits",
-      "changeType": "Changed",
-      "majorOrMinor": "Minor",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "BEN-20866",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/0ab06ac7df2c400aa2e169b0649e2ed5.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "medium",
-        "label": "Medium",
-        "color": "#eab308"
-      },
-      "plainEnglish": "Updated automatically. You can now create multiple Benefit Enrollment processes for the same Legal Entity.",
-      "releaseVersion": "1H 2026"
-    },
-    {
       "title": "Access Approved Benefits Even When Some Benefits are Pending Approval",
       "description": "As an employee, you can now access approved benefits in an enrollment window even if some benefits are still pending approval. This enhancement eliminates enrollment delays caused by pending approvals.",
       "product": "Employee Central",
@@ -5472,6 +5547,31 @@
         "color": "#eab308"
       },
       "plainEnglish": "Updated automatically. Employees can now view their Benefits Statement in their preferred language.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "Support Multiple Benefit Enrollment Processes For A Legal Entity",
+      "description": "You can now create multiple Benefit Enrollment processes for the same Legal Entity. This allows you to define different sets of benefits and their respective enrollment period for the same legal entity.",
+      "product": "Employee Central",
+      "module": "Global Benefits",
+      "feature": "Global Benefits",
+      "changeType": "Changed",
+      "majorOrMinor": "Minor",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "BEN-20866",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/0ab06ac7df2c400aa2e169b0649e2ed5.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "medium",
+        "label": "Medium",
+        "color": "#eab308"
+      },
+      "plainEnglish": "Updated automatically. You can now create multiple Benefit Enrollment processes for the same Legal Entity.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -5650,31 +5750,6 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "Support for Migration and Replication of the Classification Group for Canada Job Classification",
-      "description": "You can now migrate Classification Groups in the T5KWB table to the Job Classification Canada object of Employee Central and replicate the Classification Groups of the Job Classification Canada object of Employee Central to the T5KWB table. The enhancement is supported in both PA_SE_IN and ECS4HCM add-ons.",
-      "product": "Employee Central",
-      "module": "Integration and Extension",
-      "feature": "ERP Integration",
-      "changeType": "New",
-      "majorOrMinor": "Major",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "ECT-257301",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/b265505398dd403283a79a22de3e054b.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "high",
-        "label": "High",
-        "color": "#f97316"
-      },
-      "plainEnglish": "Significant new capability - could change how you work. You can now migrate Classification Groups in the T5KWB table to the Job Classification Canada object of Employee Central and replicate the Classification Groups of the Job Classification Canada obj... Review config steps and test in sandbox first.",
-      "releaseVersion": "1H 2026"
-    },
-    {
       "title": "BAdI for Organizational Data Replication",
       "description": "You can now use the SFIOM_ORG_OBJECT_REPLICATION BAdI to modify or add values to infotype fields not covered by standard mapping during organizational data replication.",
       "product": "Employee Central",
@@ -5797,6 +5872,31 @@
         "color": "#f97316"
       },
       "plainEnglish": "Significant new capability - could change how you work. The infotype-Specific Full Transmission Start Date now supports the 0021 (Dependents), 0041 (Date Specifications), and 0185 (Personal IDs) infotypes. Review config steps and test in sandbox first.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "Support for Migration and Replication of the Classification Group for Canada Job Classification",
+      "description": "You can now migrate Classification Groups in the T5KWB table to the Job Classification Canada object of Employee Central and replicate the Classification Groups of the Job Classification Canada object of Employee Central to the T5KWB table. The enhancement is supported in both PA_SE_IN and ECS4HCM add-ons.",
+      "product": "Employee Central",
+      "module": "Integration and Extension",
+      "feature": "ERP Integration",
+      "changeType": "New",
+      "majorOrMinor": "Major",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "ECT-257301",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/b265505398dd403283a79a22de3e054b.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "high",
+        "label": "High",
+        "color": "#f97316"
+      },
+      "plainEnglish": "Significant new capability - could change how you work. You can now migrate Classification Groups in the T5KWB table to the Job Classification Canada object of Employee Central and replicate the Classification Groups of the Job Classification Canada obj... Review config steps and test in sandbox first.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -6050,31 +6150,6 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "Support for .docx File Format in Document Generation",
-      "description": "Document Generation now supports the .docx file format, improving compatibility and stability for complex and multilingual documents.",
-      "product": "Employee Central",
-      "module": "Localization",
-      "feature": "Country/Region Specifics",
-      "changeType": "New",
-      "majorOrMinor": "Minor",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "ECT-260748",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/7983b97db219482fb99ec4a6bc5022f2.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "low",
-        "label": "Low",
-        "color": "#22c55e"
-      },
-      "plainEnglish": "Active automatically - no setup needed. Document Generation now supports the.",
-      "releaseVersion": "1H 2026"
-    },
-    {
       "title": "Employee Pay Transparency Information",
       "description": "Standardized employee information documents with comparator data can now be configured by admins and generated by both employees and admins, supporting compliance with the Employee Pay Transparency Information. This feature streamlines the process of meeting regulatory requirements and ensures consistent, accessible reporting.",
       "product": "Employee Central",
@@ -6125,28 +6200,28 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "Localized Enhancements for Multiple Countries/Regions",
-      "description": "In this overview, you get information about the country/region-specific enhancements in Employee Central for the countries/regions: Argentina, Bulgaria, the Czech Republic, Egypt, Greece, Japan, Poland, South Africa, and Mexico.",
+      "title": "Support for .docx File Format in Document Generation",
+      "description": "Document Generation now supports the .docx file format, improving compatibility and stability for complex and multilingual documents.",
       "product": "Employee Central",
       "module": "Localization",
       "feature": "Country/Region Specifics",
-      "changeType": "Changed",
+      "changeType": "New",
       "majorOrMinor": "Minor",
       "lifecycle": "General Availability",
       "action": "Info only",
-      "enablement": "Customer configured",
-      "refNumber": "ECT-258295",
+      "enablement": "Automatically on",
+      "refNumber": "ECT-260748",
       "demo": "",
       "version": "1H 2026",
       "validAsOf": "May 15, 2026",
       "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/bee945617eac4acc8a5570ae4d994635.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/7983b97db219482fb99ec4a6bc5022f2.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
       "impact": {
-        "level": "medium",
-        "label": "Medium",
-        "color": "#eab308"
+        "level": "low",
+        "label": "Low",
+        "color": "#22c55e"
       },
-      "plainEnglish": "Minor update - configure if useful. In this overview, you get information about the country/region-specific enhancements in Employee Central for the countries/regions: Argentina, Bulgaria, the Czech Republic, Egypt, Greece, Japan, Po...",
+      "plainEnglish": "Active automatically - no setup needed. Document Generation now supports the.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -6197,6 +6272,31 @@
         "color": "#eab308"
       },
       "plainEnglish": "Minor update - configure if useful. Income Tax Declaration in Employee Central now complies with India's Income-tax Bill 2025, which restructures provisions of the Income-tax Act, 1961.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "Localized Enhancements for Multiple Countries/Regions",
+      "description": "In this overview, you get information about the country/region-specific enhancements in Employee Central for the countries/regions: Argentina, Bulgaria, the Czech Republic, Egypt, Greece, Japan, Poland, South Africa, and Mexico.",
+      "product": "Employee Central",
+      "module": "Localization",
+      "feature": "Country/Region Specifics",
+      "changeType": "Changed",
+      "majorOrMinor": "Minor",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Customer configured",
+      "refNumber": "ECT-258295",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/bee945617eac4acc8a5570ae4d994635.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "medium",
+        "label": "Medium",
+        "color": "#eab308"
+      },
+      "plainEnglish": "Minor update - configure if useful. In this overview, you get information about the country/region-specific enhancements in Employee Central for the countries/regions: Argentina, Bulgaria, the Czech Republic, Egypt, Greece, Japan, Po...",
       "releaseVersion": "1H 2026"
     },
     {
@@ -6500,31 +6600,6 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "Processing of Time Account Type Based Accruals on Recorded Time Calendar",
-      "description": "Accruals on Recorded Time Calendar now supports time account type-specific calendar creation and processing, enabling parallel runs, improved performance, and clearer processing control.",
-      "product": "Employee Central",
-      "module": "Time Management",
-      "feature": "Time Off",
-      "changeType": "Changed",
-      "majorOrMinor": "Minor",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "TIM-56387",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/98156e38f8ab439085b484811bfcbf5d.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "medium",
-        "label": "Medium",
-        "color": "#eab308"
-      },
-      "plainEnglish": "Updated automatically. Accruals on Recorded Time Calendar now supports time account type-specific calendar creation and processing, enabling parallel runs, improved performance, and clearer processing control.",
-      "releaseVersion": "1H 2026"
-    },
-    {
       "title": "Handling No-Show Employees in Time Management",
       "description": "We've enhanced the termination end handling process in Time Off to include automatic handling of employees reported as No Show.",
       "product": "Employee Central",
@@ -6572,6 +6647,31 @@
         "color": "#eab308"
       },
       "plainEnglish": "Minor update - configure if useful. You can now create absence counting rules that differentiate between holidays that fall on scheduled working days and holidays on non-working days.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "Processing of Time Account Type Based Accruals on Recorded Time Calendar",
+      "description": "Accruals on Recorded Time Calendar now supports time account type-specific calendar creation and processing, enabling parallel runs, improved performance, and clearer processing control.",
+      "product": "Employee Central",
+      "module": "Time Management",
+      "feature": "Time Off",
+      "changeType": "Changed",
+      "majorOrMinor": "Minor",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "TIM-56387",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/98156e38f8ab439085b484811bfcbf5d.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "medium",
+        "label": "Medium",
+        "color": "#eab308"
+      },
+      "plainEnglish": "Updated automatically. Accruals on Recorded Time Calendar now supports time account type-specific calendar creation and processing, enabling parallel runs, improved performance, and clearer processing control.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -6675,31 +6775,6 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "Work Incapacity Percentage Replication for Sweden",
-      "description": "You can now replicate the Work Incapacity Percentage field from SAP SuccessFactors Employee Central to the Absences infotype (2001) for Sweden in SAP SuccessFactors Employee Central Payroll.",
-      "product": "Employee Central Payroll",
-      "module": "Payroll",
-      "feature": "Country/Region Specifics\nEmployee Master Data Replication",
-      "changeType": "New",
-      "majorOrMinor": "Minor",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "PAY-34556",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/31ef325f80494194a03b88f0ad5e45e2.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "low",
-        "label": "Low",
-        "color": "#22c55e"
-      },
-      "plainEnglish": "Active automatically - no setup needed. You can now replicate the Work Incapacity Percentage field from SAP SuccessFactors Employee Central to the Absences infotype (2001) for Sweden in SAP SuccessFactors Employee Central Payroll.",
-      "releaseVersion": "1H 2026"
-    },
-    {
       "title": "Available Work Capacity Percentage Replication for Norway",
       "description": "You can now replicate the Available Work Capacity Percentage field from SAP SuccessFactors Employee Central to the Absences infotype (2001) for Norway in SAP SuccessFactors Employee Central Payroll.",
       "product": "Employee Central Payroll",
@@ -6722,6 +6797,31 @@
         "color": "#22c55e"
       },
       "plainEnglish": "Active automatically - no setup needed. You can now replicate the Available Work Capacity Percentage field from SAP SuccessFactors Employee Central to the Absences infotype (2001) for Norway in SAP SuccessFactors Employee Central Payroll.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "Work Incapacity Percentage Replication for Sweden",
+      "description": "You can now replicate the Work Incapacity Percentage field from SAP SuccessFactors Employee Central to the Absences infotype (2001) for Sweden in SAP SuccessFactors Employee Central Payroll.",
+      "product": "Employee Central Payroll",
+      "module": "Payroll",
+      "feature": "Country/Region Specifics\nEmployee Master Data Replication",
+      "changeType": "New",
+      "majorOrMinor": "Minor",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "PAY-34556",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/31ef325f80494194a03b88f0ad5e45e2.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "low",
+        "label": "Low",
+        "color": "#22c55e"
+      },
+      "plainEnglish": "Active automatically - no setup needed. You can now replicate the Work Incapacity Percentage field from SAP SuccessFactors Employee Central to the Absences infotype (2001) for Sweden in SAP SuccessFactors Employee Central Payroll.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -7022,31 +7122,6 @@
         "color": "#ef4444"
       },
       "plainEnglish": "Will stop working - you need a replacement. Timeline: November 13, 2026. Check the linked SAP Note for migration steps.",
-      "releaseVersion": "1H 2026"
-    },
-    {
-      "title": "Default User Preference Settings for Org Chart",
-      "description": "As an administrator, you can now set system-wide defaults for user preferences of displaying reports and contingent workers in the Org Chart. The new controls let you define the initial state users see when they open the Org Chart.",
-      "product": "Employee Central\nPlatform",
-      "module": "Company Organization",
-      "feature": "Organization Chart",
-      "changeType": "New",
-      "majorOrMinor": "Minor",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "ECT-255988",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/f5bc680bcdfb4c1fa06a55dd92d2c663.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "low",
-        "label": "Low",
-        "color": "#22c55e"
-      },
-      "plainEnglish": "Active automatically - no setup needed. As an administrator, you can now set system-wide defaults for user preferences of displaying reports and contingent workers in the Org Chart.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -8300,31 +8375,6 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "Target Population Enforcement for Rehire Inactive Employee",
-      "description": "You can now enforce target population restrictions for Rehire Inactive Employee (by match in New Hire) and Rehire Inactive Employee with New Employment (by match in New Hire) permissions in Onboarding.",
-      "product": "Onboarding",
-      "module": "Onboarding",
-      "feature": "Onboarding",
-      "changeType": "Changed",
-      "majorOrMinor": "Major",
-      "lifecycle": "General Availability",
-      "action": "Recommended",
-      "enablement": "Customer configured",
-      "refNumber": "OBX-39684",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/95e299929b284120be2499cc538c6822.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "medium",
-        "label": "Medium",
-        "color": "#eab308"
-      },
-      "plainEnglish": "Significant update. You can now enforce target population restrictions for Rehire Inactive Employee (by match in New Hire) and Rehire Inactive Employee with New Employment (by match in New Hire) permissions in Onboarding. Plan configuration changes and communicate to users.",
-      "releaseVersion": "1H 2026"
-    },
-    {
       "title": "Enhanced Limit of Responsible Group Dropdown in Manage Onboarding and Offboarding Programs",
       "description": "As an administrator, you can now access all available responsible groups in the Manage Onboarding and Offboarding Programs page.",
       "product": "Onboarding",
@@ -8372,6 +8422,31 @@
         "color": "#eab308"
       },
       "plainEnglish": "Updated automatically. The Onboarding Responsible Group limit is now 500 users.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "Target Population Enforcement for Rehire Inactive Employee",
+      "description": "You can now enforce target population restrictions for Rehire Inactive Employee (by match in New Hire) and Rehire Inactive Employee with New Employment (by match in New Hire) permissions in Onboarding.",
+      "product": "Onboarding",
+      "module": "Onboarding",
+      "feature": "Onboarding",
+      "changeType": "Changed",
+      "majorOrMinor": "Major",
+      "lifecycle": "General Availability",
+      "action": "Recommended",
+      "enablement": "Customer configured",
+      "refNumber": "OBX-39684",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/95e299929b284120be2499cc538c6822.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "medium",
+        "label": "Medium",
+        "color": "#eab308"
+      },
+      "plainEnglish": "Significant update. You can now enforce target population restrictions for Rehire Inactive Employee (by match in New Hire) and Rehire Inactive Employee with New Employment (by match in New Hire) permissions in Onboarding. Plan configuration changes and communicate to users.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -8825,31 +8900,6 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "User Experience Enhancements to Latest Performance Management Forms",
-      "description": "We've made enhancements to the latest experience of Performance Management forms, including quick actions to edit or remove items, error alerts for each item, an improved collaborative step experience, and more.",
-      "product": "Performance & Goals",
-      "module": "Performance Management",
-      "feature": "Form Assessment",
-      "changeType": "Changed",
-      "majorOrMinor": "Major",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "PMU-25660",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/c8f12e7a754d42ec990702126a224974.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "high",
-        "label": "High",
-        "color": "#f97316"
-      },
-      "plainEnglish": "Significant update. We've made enhancements to the latest experience of Performance Management forms, including quick actions to edit or remove items, error alerts for each item, an improved collaborative step experie... Plan configuration changes and communicate to users.",
-      "releaseVersion": "1H 2026"
-    },
-    {
       "title": "Default Expanded or Collapsed State for Section Descriptions on Latest Performance Management Forms",
       "description": "With the latest experience of Performance Management forms, you can now set section descriptions to be expanded or collapsed by default. The section description area has also been improved for better accessibility.",
       "product": "Performance & Goals",
@@ -8922,6 +8972,31 @@
         "color": "#f97316"
       },
       "plainEnglish": "Significant update. The new Performance Management form experience is now automatically enabled in all systems, except those that use the legacy Goal Management or Job Description Manager. Plan configuration changes and communicate to users.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "User Experience Enhancements to Latest Performance Management Forms",
+      "description": "We've made enhancements to the latest experience of Performance Management forms, including quick actions to edit or remove items, error alerts for each item, an improved collaborative step experience, and more.",
+      "product": "Performance & Goals",
+      "module": "Performance Management",
+      "feature": "Form Assessment",
+      "changeType": "Changed",
+      "majorOrMinor": "Major",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "PMU-25660",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/c8f12e7a754d42ec990702126a224974.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "high",
+        "label": "High",
+        "color": "#f97316"
+      },
+      "plainEnglish": "Significant update. We've made enhancements to the latest experience of Performance Management forms, including quick actions to edit or remove items, error alerts for each item, an improved collaborative step experie... Plan configuration changes and communicate to users.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -9600,81 +9675,6 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "New Visibility for SSO and Partial SSO Settings on the Manage SAML SSO Settings Page",
-      "description": "You can now view and manage the SSO enablement and Partial Organization SSO Provisioning settings directly on the Manage SAML SSO Settings page in Admin Center.",
-      "product": "Platform",
-      "module": "Identity and Access Management",
-      "feature": "Single Sign-On",
-      "changeType": "Changed",
-      "majorOrMinor": "Major",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "PLT-87591",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/c83462dd196f404bb721bd84a54ea0ad.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "high",
-        "label": "High",
-        "color": "#f97316"
-      },
-      "plainEnglish": "Significant update. You can now view and manage the SSO enablement and Partial Organization SSO Provisioning settings directly on the Manage SAML SSO Settings page in Admin Center. Plan configuration changes and communicate to users.",
-      "releaseVersion": "1H 2026"
-    },
-    {
-      "title": "SSO Check Tool Enhancements for Identity Authentication Integration",
-      "description": "The SSO Check Tool now includes enhanced checks and support to help administrators review and correct SAML single sign-on settings with Identity Authentication.",
-      "product": "Platform",
-      "module": "Identity and Access Management",
-      "feature": "Single Sign-On",
-      "changeType": "Changed",
-      "majorOrMinor": "Minor",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "PLT-88380",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/35b7895bae804b09943f31bca01f2168.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "medium",
-        "label": "Medium",
-        "color": "#eab308"
-      },
-      "plainEnglish": "Updated automatically. The SSO Check Tool now includes enhanced checks and support to help administrators review and correct SAML single sign-on settings with Identity Authentication.",
-      "releaseVersion": "1H 2026"
-    },
-    {
-      "title": "View Audit Logs for Authorized Service Provider Consumer Services Changes",
-      "description": "You can now view audit logs for updates and deletions made to Authorized Service Provider (SP) Consumer Services records in the Admin Center.",
-      "product": "Platform",
-      "module": "Identity and Access Management",
-      "feature": "Single Sign-On",
-      "changeType": "Changed",
-      "majorOrMinor": "Minor",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "PLT-86256",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/864cea4133f54039a9f619ff278329ff.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "medium",
-        "label": "Medium",
-        "color": "#eab308"
-      },
-      "plainEnglish": "Updated automatically. You can now view audit logs for updates and deletions made to Authorized Service Provider (SP) Consumer Services records in the Admin Center.",
-      "releaseVersion": "1H 2026"
-    },
-    {
       "title": "Admin Center Banner Now Links to Initiating Identity Authentication Integration",
       "description": "A banner on the Admin Center homepage now provides a direct link to upgrade to Identity Authentication for tenants that haven't migrated yet.",
       "product": "Platform",
@@ -9750,6 +9750,31 @@
       "releaseVersion": "1H 2026"
     },
     {
+      "title": "New Visibility for SSO and Partial SSO Settings on the Manage SAML SSO Settings Page",
+      "description": "You can now view and manage the SSO enablement and Partial Organization SSO Provisioning settings directly on the Manage SAML SSO Settings page in Admin Center.",
+      "product": "Platform",
+      "module": "Identity and Access Management",
+      "feature": "Single Sign-On",
+      "changeType": "Changed",
+      "majorOrMinor": "Major",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "PLT-87591",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/c83462dd196f404bb721bd84a54ea0ad.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "high",
+        "label": "High",
+        "color": "#f97316"
+      },
+      "plainEnglish": "Significant update. You can now view and manage the SSO enablement and Partial Organization SSO Provisioning settings directly on the Manage SAML SSO Settings page in Admin Center. Plan configuration changes and communicate to users.",
+      "releaseVersion": "1H 2026"
+    },
+    {
       "title": "Required Initiation of Identity Authentication for Non-Integrated Tenants",
       "description": "To support the transition to Identity Authentication, administrators must initiate the Initiate the SAP Cloud Identity Services Identity Authentication Service Integration Upgrade Center task for customer tenants that are not yet integrated with Identity Authentication.",
       "product": "Platform",
@@ -9772,6 +9797,56 @@
         "color": "#f97316"
       },
       "plainEnglish": "Important change to review. To support the transition to Identity Authentication, administrators must initiate the Initiate the SAP Cloud Identity Services Identity Authentication Service Integration Upgrade Center task for c...",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "SSO Check Tool Enhancements for Identity Authentication Integration",
+      "description": "The SSO Check Tool now includes enhanced checks and support to help administrators review and correct SAML single sign-on settings with Identity Authentication.",
+      "product": "Platform",
+      "module": "Identity and Access Management",
+      "feature": "Single Sign-On",
+      "changeType": "Changed",
+      "majorOrMinor": "Minor",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "PLT-88380",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/35b7895bae804b09943f31bca01f2168.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "medium",
+        "label": "Medium",
+        "color": "#eab308"
+      },
+      "plainEnglish": "Updated automatically. The SSO Check Tool now includes enhanced checks and support to help administrators review and correct SAML single sign-on settings with Identity Authentication.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "View Audit Logs for Authorized Service Provider Consumer Services Changes",
+      "description": "You can now view audit logs for updates and deletions made to Authorized Service Provider (SP) Consumer Services records in the Admin Center.",
+      "product": "Platform",
+      "module": "Identity and Access Management",
+      "feature": "Single Sign-On",
+      "changeType": "Changed",
+      "majorOrMinor": "Minor",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "PLT-86256",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/864cea4133f54039a9f619ff278329ff.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "medium",
+        "label": "Medium",
+        "color": "#eab308"
+      },
+      "plainEnglish": "Updated automatically. You can now view audit logs for updates and deletions made to Authorized Service Provider (SP) Consumer Services records in the Admin Center.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -10350,31 +10425,6 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "Updated Default Limits for Self Join and Nested If Guardrails in Story Reports",
-      "description": "The default limits for maximum self join and maximum nested if statement guardrails are now increased to support more complex queries.",
-      "product": "Platform",
-      "module": "Reporting",
-      "feature": "Story Reports",
-      "changeType": "Changed",
-      "majorOrMinor": "Major",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "AYT-60084",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/033d28fd6e0a467fabbc3537e81d27cb.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "high",
-        "label": "High",
-        "color": "#f97316"
-      },
-      "plainEnglish": "Significant update. The default limits for maximum self join and maximum nested if statement guardrails are now increased to support more complex queries. Plan configuration changes and communicate to users.",
-      "releaseVersion": "1H 2026"
-    },
-    {
       "title": "Auto-Joined Tables in Advanced Filters in Story Reports",
       "description": "Advanced Filters now support selection of fields from the Auto-Joined tables, providing users with more flexibility when building filters in Query Designer.",
       "product": "Platform",
@@ -10422,6 +10472,31 @@
         "color": "#eab308"
       },
       "plainEnglish": "Updated automatically. You can now define both the order and sorting of columns for data export.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "Updated Default Limits for Self Join and Nested If Guardrails in Story Reports",
+      "description": "The default limits for maximum self join and maximum nested if statement guardrails are now increased to support more complex queries.",
+      "product": "Platform",
+      "module": "Reporting",
+      "feature": "Story Reports",
+      "changeType": "Changed",
+      "majorOrMinor": "Major",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "AYT-60084",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/033d28fd6e0a467fabbc3537e81d27cb.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "high",
+        "label": "High",
+        "color": "#f97316"
+      },
+      "plainEnglish": "Significant update. The default limits for maximum self join and maximum nested if statement guardrails are now increased to support more complex queries. Plan configuration changes and communicate to users.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -10500,31 +10575,6 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "Policy ID Added to Audit Retention Policies",
-      "description": "A new attribute Policy ID is added to audit retention policies in Manage Audit Configuration.",
-      "product": "Platform",
-      "module": "Security and Compliance",
-      "feature": "Audit Trail",
-      "changeType": "New",
-      "majorOrMinor": "Minor",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "PLA-53201",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/986bd8619ed946cbae015780c8114b1e.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "low",
-        "label": "Low",
-        "color": "#22c55e"
-      },
-      "plainEnglish": "Active automatically - no setup needed. A new attribute Policy ID is added to audit retention policies in Manage Audit Configuration.",
-      "releaseVersion": "1H 2026"
-    },
-    {
       "title": "Business Key and Correlation ID Columns in Change Audit Reports",
       "description": "Change audit reports now include Business Key and Correlation ID columns for each record.",
       "product": "Platform",
@@ -10597,6 +10647,31 @@
         "color": "#22c55e"
       },
       "plainEnglish": "Active automatically - no setup needed. You can now access additional configuration change audit logs and general audit logs through the Viewer for SAP Audit Log service and Audit Log Search API.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "Policy ID Added to Audit Retention Policies",
+      "description": "A new attribute Policy ID is added to audit retention policies in Manage Audit Configuration.",
+      "product": "Platform",
+      "module": "Security and Compliance",
+      "feature": "Audit Trail",
+      "changeType": "New",
+      "majorOrMinor": "Minor",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "PLA-53201",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/986bd8619ed946cbae015780c8114b1e.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "low",
+        "label": "Low",
+        "color": "#22c55e"
+      },
+      "plainEnglish": "Active automatically - no setup needed. A new attribute Policy ID is added to audit retention policies in Manage Audit Configuration.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -10800,31 +10875,6 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "Skills Governance",
-      "description": "You can now manage, standardize, and govern skills using a dedicated governance process in the Talent Intelligence Hub.",
-      "product": "Platform",
-      "module": "Talent Intelligence Hub",
-      "feature": "Attributes Library",
-      "changeType": "New",
-      "majorOrMinor": "Major",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "SIF-1457",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/110f021578cd478292734c195f2420a3.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "high",
-        "label": "High",
-        "color": "#f97316"
-      },
-      "plainEnglish": "Significant new capability - could change how you work. You can now manage, standardize, and govern skills using a dedicated governance process in the Talent Intelligence Hub. Review config steps and test in sandbox first.",
-      "releaseVersion": "1H 2026"
-    },
-    {
       "title": "New Settings Page in Talent Intelligence Hub",
       "description": "You can now manage some of the Talent Intelligence Hub administrative tasks under a new page in Talent Intelligence Hub.",
       "product": "Platform",
@@ -10847,6 +10897,31 @@
         "color": "#22c55e"
       },
       "plainEnglish": "Active automatically - no setup needed. You can now manage some of the Talent Intelligence Hub administrative tasks under a new page in Talent Intelligence Hub.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "Skills Governance",
+      "description": "You can now manage, standardize, and govern skills using a dedicated governance process in the Talent Intelligence Hub.",
+      "product": "Platform",
+      "module": "Talent Intelligence Hub",
+      "feature": "Attributes Library",
+      "changeType": "New",
+      "majorOrMinor": "Major",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "SIF-1457",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/110f021578cd478292734c195f2420a3.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "high",
+        "label": "High",
+        "color": "#f97316"
+      },
+      "plainEnglish": "Significant new capability - could change how you work. You can now manage, standardize, and govern skills using a dedicated governance process in the Talent Intelligence Hub. Review config steps and test in sandbox first.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -11050,56 +11125,6 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "Separate Management of Quick Actions and Quick Links for the Latest Home Page",
-      "description": "Quick actions and quick links for the latest home page are now managed separately in the Manage Home Page tool.",
-      "product": "Platform",
-      "module": "User Experience",
-      "feature": "Home Page",
-      "changeType": "Changed",
-      "majorOrMinor": "Minor",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "WEF-166173",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/02727bd9c06d4d9ba485402592c846af.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "medium",
-        "label": "Medium",
-        "color": "#eab308"
-      },
-      "plainEnglish": "Updated automatically. Quick actions and quick links for the latest home page are now managed separately in the Manage Home Page tool.",
-      "releaseVersion": "1H 2026"
-    },
-    {
-      "title": "View All Cards on the Latest Home Page",
-      "description": "We've added new ways for you to view all of your cards on the latest home page, for both Needs Attention and Organizational Updates sections.",
-      "product": "Platform",
-      "module": "User Experience",
-      "feature": "Home Page",
-      "changeType": "Changed",
-      "majorOrMinor": "Minor",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "WEF-168164",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/6d933843b3b44f62a99dcc7fcafe6dad.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "medium",
-        "label": "Medium",
-        "color": "#eab308"
-      },
-      "plainEnglish": "Updated automatically. We've added new ways for you to view all of your cards on the latest home page, for both Needs Attention and Organizational Updates sections.",
-      "releaseVersion": "1H 2026"
-    },
-    {
       "title": "Ability to Hide Featured Cards on the Latest Home Page",
       "description": "As an administrator, you can now choose to hide featured cards on the latest home page.",
       "product": "Platform",
@@ -11197,6 +11222,56 @@
         "color": "#eab308"
       },
       "plainEnglish": "Updated automatically. As a home page user, you can now create up to 5 personal quick links to display on your home page.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "Separate Management of Quick Actions and Quick Links for the Latest Home Page",
+      "description": "Quick actions and quick links for the latest home page are now managed separately in the Manage Home Page tool.",
+      "product": "Platform",
+      "module": "User Experience",
+      "feature": "Home Page",
+      "changeType": "Changed",
+      "majorOrMinor": "Minor",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "WEF-166173",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/02727bd9c06d4d9ba485402592c846af.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "medium",
+        "label": "Medium",
+        "color": "#eab308"
+      },
+      "plainEnglish": "Updated automatically. Quick actions and quick links for the latest home page are now managed separately in the Manage Home Page tool.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "View All Cards on the Latest Home Page",
+      "description": "We've added new ways for you to view all of your cards on the latest home page, for both Needs Attention and Organizational Updates sections.",
+      "product": "Platform",
+      "module": "User Experience",
+      "feature": "Home Page",
+      "changeType": "Changed",
+      "majorOrMinor": "Minor",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "WEF-168164",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/6d933843b3b44f62a99dcc7fcafe6dad.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "medium",
+        "label": "Medium",
+        "color": "#eab308"
+      },
+      "plainEnglish": "Updated automatically. We've added new ways for you to view all of your cards on the latest home page, for both Needs Attention and Organizational Updates sections.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -11750,31 +11825,6 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "Real-Time Attendance Replication from SAP S/4HANA to SAP SuccessFactors Time Sheet in Consolidated Time Recording",
-      "description": "You can now replicate attendance records in real time from SAP S/4HANA to SAP SuccessFactors Time Sheet to prevent data collisions and ensure consistency in Consolidated Time Recording.",
-      "product": "Time Tracking",
-      "module": "Time Management",
-      "feature": "Time Off\nTime Sheet",
-      "changeType": "New",
-      "majorOrMinor": "Major",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Customer configured",
-      "refNumber": "TIM-55873",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/f18489fc9fda4de6b27bbe68e9847a09.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "medium",
-        "label": "Medium",
-        "color": "#eab308"
-      },
-      "plainEnglish": "Significant new capability - could change how you work. You can now replicate attendance records in real time from SAP S/4HANA to SAP SuccessFactors Time Sheet to prevent data collisions and ensure consistency in Consolidated Time Recording. Review config steps and test in sandbox first.",
-      "releaseVersion": "1H 2026"
-    },
-    {
       "title": "Collision Handling for Absences and Attendances",
       "description": "You can now configure how the system manages overlaps between absences and attendances, allowing accurate time tracking even when the records collide.",
       "product": "Time Tracking",
@@ -11825,53 +11875,28 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "Source Behavior Selection for Scheduled Time Categories",
-      "description": "As an administrator, you can now configure the source of Scheduled Time categories in Time Type Groups to use either the original planned working time data or actual planned working time data which includes any temporary time information for time valuation purposes.",
+      "title": "Real-Time Attendance Replication from SAP S/4HANA to SAP SuccessFactors Time Sheet in Consolidated Time Recording",
+      "description": "You can now replicate attendance records in real time from SAP S/4HANA to SAP SuccessFactors Time Sheet to prevent data collisions and ensure consistency in Consolidated Time Recording.",
       "product": "Time Tracking",
       "module": "Time Management",
-      "feature": "Time Sheet",
+      "feature": "Time Off\nTime Sheet",
       "changeType": "New",
-      "majorOrMinor": "Minor",
+      "majorOrMinor": "Major",
       "lifecycle": "General Availability",
       "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "TIM-54645",
+      "enablement": "Customer configured",
+      "refNumber": "TIM-55873",
       "demo": "",
       "version": "1H 2026",
       "validAsOf": "May 15, 2026",
       "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/07c2a3241a05432cad90bd2966ac9cc1.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/f18489fc9fda4de6b27bbe68e9847a09.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
       "impact": {
-        "level": "low",
-        "label": "Low",
-        "color": "#22c55e"
+        "level": "medium",
+        "label": "Medium",
+        "color": "#eab308"
       },
-      "plainEnglish": "Active automatically - no setup needed. As an administrator, you can now configure the source of Scheduled Time categories in Time Type Groups to use either the original planned working time data or actual planned working time data which...",
-      "releaseVersion": "1H 2026"
-    },
-    {
-      "title": "System Behavior When the Time Container Value Changes to Zero",
-      "description": "When a time container value changes to zero due to retroactive changes, the system now retains the entire time container record with its value updated to 0.",
-      "product": "Time Tracking",
-      "module": "Time Management",
-      "feature": "Time Sheet",
-      "changeType": "New",
-      "majorOrMinor": "Minor",
-      "lifecycle": "General Availability",
-      "action": "Info only",
-      "enablement": "Automatically on",
-      "refNumber": "TIM-54451",
-      "demo": "",
-      "version": "1H 2026",
-      "validAsOf": "May 15, 2026",
-      "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/6782b0171c2244a59f8a1055ef5aabc5.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
-      "impact": {
-        "level": "low",
-        "label": "Low",
-        "color": "#22c55e"
-      },
-      "plainEnglish": "Active automatically - no setup needed. When a time container value changes to zero due to retroactive changes, the system now retains the entire time container record with its value updated to 0.",
+      "plainEnglish": "Significant new capability - could change how you work. You can now replicate attendance records in real time from SAP S/4HANA to SAP SuccessFactors Time Sheet to prevent data collisions and ensure consistency in Consolidated Time Recording. Review config steps and test in sandbox first.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -11925,28 +11950,53 @@
       "releaseVersion": "1H 2026"
     },
     {
-      "title": "Time Valuations Search by Time Records Filter and Attendance Quota Type",
-      "description": "You can now search for Time Valuations using Time Records Filter in the Time Management Configuration Search.",
+      "title": "Source Behavior Selection for Scheduled Time Categories",
+      "description": "As an administrator, you can now configure the source of Scheduled Time categories in Time Type Groups to use either the original planned working time data or actual planned working time data which includes any temporary time information for time valuation purposes.",
       "product": "Time Tracking",
       "module": "Time Management",
       "feature": "Time Sheet",
-      "changeType": "Changed",
+      "changeType": "New",
       "majorOrMinor": "Minor",
       "lifecycle": "General Availability",
       "action": "Info only",
       "enablement": "Automatically on",
-      "refNumber": "TIM-56531",
+      "refNumber": "TIM-54645",
       "demo": "",
       "version": "1H 2026",
       "validAsOf": "May 15, 2026",
       "latestRevision": "Apr 3, 2026",
-      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/ca4db57c4658425f87efa0b938ad0219.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/07c2a3241a05432cad90bd2966ac9cc1.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
       "impact": {
-        "level": "medium",
-        "label": "Medium",
-        "color": "#eab308"
+        "level": "low",
+        "label": "Low",
+        "color": "#22c55e"
       },
-      "plainEnglish": "Updated automatically. You can now search for Time Valuations using Time Records Filter in the Time Management Configuration Search.",
+      "plainEnglish": "Active automatically - no setup needed. As an administrator, you can now configure the source of Scheduled Time categories in Time Type Groups to use either the original planned working time data or actual planned working time data which...",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "System Behavior When the Time Container Value Changes to Zero",
+      "description": "When a time container value changes to zero due to retroactive changes, the system now retains the entire time container record with its value updated to 0.",
+      "product": "Time Tracking",
+      "module": "Time Management",
+      "feature": "Time Sheet",
+      "changeType": "New",
+      "majorOrMinor": "Minor",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "TIM-54451",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/6782b0171c2244a59f8a1055ef5aabc5.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "low",
+        "label": "Low",
+        "color": "#22c55e"
+      },
+      "plainEnglish": "Active automatically - no setup needed. When a time container value changes to zero due to retroactive changes, the system now retains the entire time container record with its value updated to 0.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -12022,6 +12072,31 @@
         "color": "#eab308"
       },
       "plainEnglish": "Updated automatically. You can now configure more periodic Time Containers in a Time Recording Profile.",
+      "releaseVersion": "1H 2026"
+    },
+    {
+      "title": "Time Valuations Search by Time Records Filter and Attendance Quota Type",
+      "description": "You can now search for Time Valuations using Time Records Filter in the Time Management Configuration Search.",
+      "product": "Time Tracking",
+      "module": "Time Management",
+      "feature": "Time Sheet",
+      "changeType": "Changed",
+      "majorOrMinor": "Minor",
+      "lifecycle": "General Availability",
+      "action": "Info only",
+      "enablement": "Automatically on",
+      "refNumber": "TIM-56531",
+      "demo": "",
+      "version": "1H 2026",
+      "validAsOf": "May 15, 2026",
+      "latestRevision": "Apr 3, 2026",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/ca4db57c4658425f87efa0b938ad0219.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "medium",
+        "label": "Medium",
+        "color": "#eab308"
+      },
+      "plainEnglish": "Updated automatically. You can now search for Time Valuations using Time Records Filter in the Time Management Configuration Search.",
       "releaseVersion": "1H 2026"
     },
     {
@@ -13072,7 +13147,10 @@
         "color": "#ef4444"
       },
       "plainEnglish": "Will stop working - you need a replacement. Timeline: November 14, 2025. Check the linked SAP Note for migration steps.",
-      "releaseVersion": "1H 2026"
+      "releaseVersion": "1H 2026",
+      "alsoInVersion": [
+        "2H 2026 (Preview)"
+      ]
     },
     {
       "title": "Deprecation of Manage Asserting Parties Page",
@@ -13097,7 +13175,10 @@
         "color": "#ef4444"
       },
       "plainEnglish": "Will stop working - you need a replacement. Timeline: May 14, 2026. Check the linked SAP Note for migration steps.",
-      "releaseVersion": "1H 2026"
+      "releaseVersion": "1H 2026",
+      "alsoInVersion": [
+        "2H 2026 (Preview)"
+      ]
     },
     {
       "title": "Deprecation of OAuth IdP API /oauth/idp",
@@ -13122,7 +13203,10 @@
         "color": "#ef4444"
       },
       "plainEnglish": "Will stop working - you need a replacement. Timeline: December 9, 2022. Check the linked SAP Note for migration steps.",
-      "releaseVersion": "1H 2026"
+      "releaseVersion": "1H 2026",
+      "alsoInVersion": [
+        "2H 2026 (Preview)"
+      ]
     },
     {
       "title": "Deprecation of Employee Central Service Center",
@@ -13346,6 +13430,90 @@
       "releaseVersion": "1H 2026",
       "alsoInVersion": [
         "2H 2026 (Preview)"
+      ]
+    },
+    {
+      "title": "Deprecation of Legacy Learning Search",
+      "description": "The legacy Learning search experience will reach End of Maintenance on November 14, 2025 and will be Deleted on May 14, 2027.",
+      "product": "Learning",
+      "module": "Content Discovery",
+      "feature": "Course Library",
+      "changeType": "Changed",
+      "majorOrMinor": "",
+      "lifecycle": "Deprecated",
+      "action": "Required",
+      "enablement": "Automatically on",
+      "refNumber": "LRN-200811",
+      "demo": "Not Applicable",
+      "version": "1H 2026\n1H 2027\n2H 2025\n2H 2026",
+      "validAsOf": "May 14, 2027",
+      "latestRevision": "Oct 3, 2025",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/302b6334085a40b1a6d6ecdc8f5d5319.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885%3FVersion%3D2H%2B2026%3B1H%252B2026&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "critical",
+        "label": "Critical",
+        "color": "#ef4444"
+      },
+      "plainEnglish": "Will stop working - you need a replacement. Timeline: November 14, 2025. Check the linked SAP Note for migration steps.",
+      "releaseVersion": "2H 2026 (Preview)",
+      "alsoInVersion": [
+        "1H 2026"
+      ]
+    },
+    {
+      "title": "Deprecation of Manage Asserting Parties Page",
+      "description": "The Manage Asserting Parties page in SAP SuccessFactors will reach end of maintenance on May 14, 2026 and be deleted on November 20, 2026. Administrators should use the Monitoring Tool for SAP Cloud Identity Services Integration page, which now provides a clearer and more complete view of SAML assertion parties.",
+      "product": "Platform",
+      "module": "Identity and Access Management",
+      "feature": "Single Sign-On",
+      "changeType": "Changed",
+      "majorOrMinor": "",
+      "lifecycle": "Deprecated",
+      "action": "Required",
+      "enablement": "Automatically on",
+      "refNumber": "PLT-87489",
+      "demo": "Not Applicable",
+      "version": "1H 2026\n2H 2025\n2H 2026",
+      "validAsOf": "Nov 20, 2026",
+      "latestRevision": "Oct 3, 2025",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/194a607884c747f2a5e7377a5e5df14a.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885%3FVersion%3D2H%2B2026%3B1H%252B2026&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "critical",
+        "label": "Critical",
+        "color": "#ef4444"
+      },
+      "plainEnglish": "Will stop working - you need a replacement. Timeline: May 14, 2026. Check the linked SAP Note for migration steps.",
+      "releaseVersion": "2H 2026 (Preview)",
+      "alsoInVersion": [
+        "1H 2026"
+      ]
+    },
+    {
+      "title": "Deprecation of OAuth IdP API /oauth/idp",
+      "description": "The OAuth IdP API /oauth/idp will reach end of development on December 9, 2022 and will be deleted on May 14, 2027.",
+      "product": "Platform",
+      "module": "Integration and Extension",
+      "feature": "API",
+      "changeType": "Changed",
+      "majorOrMinor": "",
+      "lifecycle": "Deprecated",
+      "action": "Required",
+      "enablement": "Automatically on",
+      "refNumber": "API-23511",
+      "demo": "Not Applicable",
+      "version": "1H 2023\n1H 2024\n1H 2025\n1H 2026\n1H 2027\n2H 2022\n2H 2023\n2H 2024\n2H 2025\n2H 2026",
+      "validAsOf": "May 14, 2027",
+      "latestRevision": "Jul 18, 2025",
+      "sapLink": "https://help.sap.com/docs/PRODUCTS/8e0d540f96474717bbf18df51e54e522/db7ccbbbc7a54e929a305ff92d12241c.html?version=cloud&locale=en-US&parentHref=https%3A%2F%2Fhelp.sap.com%2Fwhats-new%2F8fcf4960eea24f78b1d7613da406a885%3FVersion%3D2H%2B2026%3B1H%252B2026&parentName=SAP%20SuccessFactors%20What's%20New",
+      "impact": {
+        "level": "critical",
+        "label": "Critical",
+        "color": "#ef4444"
+      },
+      "plainEnglish": "Will stop working - you need a replacement. Timeline: December 9, 2022. Check the linked SAP Note for migration steps.",
+      "releaseVersion": "2H 2026 (Preview)",
+      "alsoInVersion": [
+        "1H 2026"
       ]
     },
     {
